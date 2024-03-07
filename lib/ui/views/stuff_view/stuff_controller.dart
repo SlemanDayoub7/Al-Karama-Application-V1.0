@@ -31,6 +31,6 @@ class StuffController extends GetxController {
     if (haveWrong) {
       CustomToast.showMeassge(message: tr("key_some_thing_wrong"));
     }
-    isLoading.value =haveWrong= false;
+    isLoading.value = haveWrong = false;
   }
 }

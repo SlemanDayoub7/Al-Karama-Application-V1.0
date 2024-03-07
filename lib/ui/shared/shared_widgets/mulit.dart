@@ -66,7 +66,7 @@ class MultiColorUnderline extends StatelessWidget {
                     fontWeight: fontWeight ?? FontWeight.w800,
                     color: textColor)),
             SizedBox(
-              height: screenWidth(100),
+              height: screenWidth(50),
             ),
             // Put the row of containers below
             Row(

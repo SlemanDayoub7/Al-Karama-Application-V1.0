@@ -40,17 +40,17 @@ class FansView extends StatelessWidget {
                               width: screenWidth(1),
                             ),
                           )
-                        : Container(
-                            height: screenWidth(1.8),
-                            width: screenWidth(1),
+                        : ClipRRect(
+                            borderRadius: BorderRadius.circular(25),
                             child: CustomImage(
                               url: controller.fans[0].image ?? "",
                               height: screenWidth(1.8),
                               width: screenWidth(1),
                               fit: BoxFit.cover,
-                            ))),
+                            ),
+                          )),
                     SizedBox(
-                      height: screenWidth(30),
+                      height: screenWidth(20),
                     ),
                     Obx(() => controller.fans.length == 0
                         ? SizedBox()
@@ -61,7 +61,7 @@ class FansView extends StatelessWidget {
                                 styleType: TextStyleType.CUSTOMTITLE,
                               )
                             : SizedBox()),
-                    SizedBox(height: screenWidth(30)),
+                    SizedBox(height: screenWidth(20)),
                     Obx(() => controller.isLoading.value
                         ? CustomShimmer(
                             shimmerType: ShimmerType.CUSTOM,
@@ -234,7 +234,7 @@ class FansView extends StatelessWidget {
                                     ),
                                   )
                                 : SizedBox()),
-                    SizedBox(height: screenWidth(30)),
+                    SizedBox(height: screenWidth(20)),
                     Obx(() => controller.fans.length == 0
                         ? SizedBox()
                         : controller.fans[0].description == null
@@ -243,7 +243,7 @@ class FansView extends StatelessWidget {
                                 text: "لمحة عن الرابطة",
                                 styleType: TextStyleType.CUSTOMTITLE,
                               )),
-                    SizedBox(height: screenWidth(30)),
+                    SizedBox(height: screenWidth(20)),
                     Obx(() => controller.fans.length == 0
                         ? SizedBox()
                         : controller.fans[0].description == null
@@ -295,8 +295,8 @@ class FansView extends StatelessWidget {
                                                     "");
                                               },
                                               child: Container(
-                                                width: screenWidth(3.5),
-                                                height: screenWidth(3.5),
+                                                width: screenWidth(3),
+                                                height: screenWidth(3),
                                                 decoration: BoxDecoration(
                                                   borderRadius:
                                                       BorderRadius.circular(25),
@@ -311,11 +311,10 @@ class FansView extends StatelessWidget {
                                                         child: CustomImage(
                                                           url: controller
                                                               .imagesUrl[index],
-                                                          width:
-                                                              screenWidth(3.5),
+                                                          width: screenWidth(3),
                                                           height:
-                                                              screenWidth(3.5),
-                                                          fit: BoxFit.cover,
+                                                              screenWidth(3),
+                                                          fit: BoxFit.fill,
                                                         ),
                                                       ),
                                                     ),

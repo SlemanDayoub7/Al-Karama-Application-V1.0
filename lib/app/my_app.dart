@@ -34,7 +34,7 @@ class _MyAppState extends State<MyApp> {
         transitionDuration: Duration(milliseconds: 200),
         defaultTransition: Transition.fadeIn,
         translations: AppTranslation(),
-        title: 'Alkarama App V1.0',
+        title: 'al_karama_app V1.0',
         theme: ThemeData(
           fontFamily: "Cairo",
           primarySwatch: Colors.blue,
