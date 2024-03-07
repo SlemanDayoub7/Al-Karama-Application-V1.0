@@ -42,17 +42,11 @@ class PlayerDetailView extends StatelessWidget {
                 children: [
                   Align(
                       alignment: Alignment.topCenter,
-                      child: Image.network(
-                        controller.playerDetail.value.image ?? "",
+                      child: CustomImage(
+                        url: controller.playerDetail.value.image ?? "",
                         width: screenHeight(4),
                         height: screenWidth(1.4),
                         fit: BoxFit.fill,
-                        errorBuilder: (context, error, stackTrace) {
-                          return SizedBox(
-                            width: screenHeight(4),
-                            height: screenWidth(1.4),
-                          );
-                        },
                       )),
                   Container(
                     margin: EdgeInsets.only(top: screenWidth(1.4)),

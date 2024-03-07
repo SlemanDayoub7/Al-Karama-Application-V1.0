@@ -1,4 +1,5 @@
 import 'package:al_karama_app/ui/shared/colors.dart';
+import 'package:al_karama_app/ui/shared/custom_widgets/custom_image.dart';
 import 'package:flutter/material.dart';
 import 'package:al_karama_app/ui/shared/custom_widgets/custom_text.dart';
 import 'package:al_karama_app/ui/shared/utils.dart';
@@ -21,17 +22,11 @@ class CustomTeam extends StatelessWidget {
       height: screenWidth(4.5),
       child: Column(
         children: [
-          Image.network(
-            imageUrl,
-fit: BoxFit.cover,
+          CustomImage(
+            url: imageUrl,
+            fit: BoxFit.cover,
             width: screenWidth(8),
             height: screenWidth(8),
-            errorBuilder: (context, error, stackTrace) {
-              return SizedBox(
-                width: screenWidth(8),
-                height: screenWidth(8),
-              );
-            },
           ),
           CustomText(
             textAlign: TextAlign.center,

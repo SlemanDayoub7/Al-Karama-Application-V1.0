@@ -20,6 +20,7 @@ class ResultsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
+      backgroundColor: AppColors.backGroundColor,
       appBar: CustomAppBar(
         title: "النتائج",
         haveIconBack: false,

@@ -3,6 +3,8 @@ import 'package:al_karama_app/ui/shared/colors.dart';
 import 'package:al_karama_app/ui/shared/custom_widgets/custom_text.dart';
 import 'package:al_karama_app/ui/shared/utils.dart';
 
+import '../custom_widgets/custom_image.dart';
+
 class CustomVideo extends StatelessWidget {
   final String title, videoUrl;
   final Color? color;
@@ -40,14 +42,8 @@ class CustomVideo extends StatelessWidget {
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(screenWidth(20)),
-                    child: Image.network(
-                      imageUrl ?? "",
-                      errorBuilder: (context, error, stackTrace) {
-                        return SizedBox(
-                          height: screenWidth(4),
-                          width: screenWidth(3.5),
-                        );
-                      },
+                    child: CustomImage(
+                      url: imageUrl ?? "",
                       fit: BoxFit.cover,
                       height: screenWidth(4),
                       width: screenWidth(3.5),

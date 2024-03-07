@@ -96,15 +96,12 @@ class AboutClubView extends StatelessWidget {
                               return Column(children: [
                                 ClipRRect(
                                   borderRadius: BorderRadius.circular(20),
-                                  child: Image.network(
-                                    controller
+                                  child: CustomImage(
+                                    url: controller
                                         .musemum.value.aboutClub![i].image!,
                                     width: screenWidth(1),
                                     height: screenWidth(2),
                                     fit: BoxFit.cover,
-                                    errorBuilder: (context, error, stackTrace) {
-                                      return SizedBox();
-                                    },
                                   ),
                                 ),
                                 SizedBox(height: screenWidth(20)),

@@ -42,32 +42,20 @@ class CustomStatistics extends StatelessWidget {
                 width: screenWidth(30),
               ),
               CustomText(text: club1.name ?? ""),
-              Image.network(
-                club1.logo!,
+              CustomImage(
+                url: club1.logo!,
                 width: screenWidth(8),
                 height: screenWidth(8),
                 fit: BoxFit.fill,
-                errorBuilder: (context, error, stackTrace) {
-                  return SizedBox(
-                    width: screenWidth(8),
-                    height: screenWidth(8),
-                  );
-                },
               ),
               SizedBox(
                 width: screenWidth(30),
               ),
-              Image.network(
-                club2.logo!,
+              CustomImage(
+                url: club2.logo!,
                 width: screenWidth(8),
                 height: screenWidth(8),
                 fit: BoxFit.fill,
-                errorBuilder: (context, error, stackTrace) {
-                  return SizedBox(
-                    width: screenWidth(8),
-                    height: screenWidth(8),
-                  );
-                },
               ),
               CustomText(text: club2.name ?? ""),
               SizedBox(

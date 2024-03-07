@@ -1,3 +1,4 @@
+import 'package:al_karama_app/ui/shared/custom_widgets/custom_image.dart';
 import 'package:flutter/material.dart';
 import 'package:al_karama_app/core/data/models/news_model.dart';
 import 'package:al_karama_app/ui/shared/colors.dart';
@@ -45,16 +46,16 @@ class CustomNews extends StatelessWidget {
         height: screenWidth(3.4),
         child: Row(
           children: [
-            Container(
-              margin: EdgeInsets.only(left: screenWidth(40)),
-              width: screenWidth(3),
-              decoration: BoxDecoration(
-                  color: Colors.grey,
-                  borderRadius: BorderRadius.circular(15),
-                  image: imageUrl != null
-                      ? DecorationImage(
-                          fit: BoxFit.fill, image: NetworkImage(imageUrl!))
-                      : null),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(15),
+              child: CustomImage(
+                  url: imageUrl ?? "",
+                  width: screenWidth(3),
+                  height: screenWidth(3.4),
+                  fit: BoxFit.fill),
+            ),
+            SizedBox(
+              width: screenWidth(40),
             ),
             Expanded(
               child: Column(

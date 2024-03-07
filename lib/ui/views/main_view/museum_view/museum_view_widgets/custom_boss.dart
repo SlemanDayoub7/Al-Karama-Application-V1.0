@@ -25,15 +25,8 @@ class CustomBoss extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-            child: Image.network(
-              imageUrl,
-              errorBuilder: (context, error, stackTrace) {
-                return Icon(
-                  Icons.person,
-                  color: AppColors.whiteColor,
-                  size: screenWidth(4),
-                );
-              },
+            child: CustomImage(
+              url: imageUrl,
               width: screenWidth(3),
               height: screenWidth(3),
               fit: BoxFit.cover,

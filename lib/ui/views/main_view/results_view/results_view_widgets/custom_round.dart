@@ -32,14 +32,11 @@ class CustomRound extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Image.network(
-                    football.team1!.logo ?? "",
+                  CustomImage(
+                    url: football.team1!.logo ?? "",
                     width: screenWidth(7),
                     height: screenWidth(7),
                     fit: BoxFit.fill,
-                    errorBuilder: (context, error, stackTrace) {
-                      return SizedBox();
-                    },
                   ),
                   CustomText(
                     text: football.team1!.name ?? "",
@@ -57,14 +54,11 @@ class CustomRound extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Image.network(
-                    football.team2!.logo ?? "",
+                  CustomImage(
+                    url: football.team2!.logo ?? "",
                     width: screenWidth(7),
                     height: screenWidth(7),
                     fit: BoxFit.fill,
-                    errorBuilder: (context, error, stackTrace) {
-                      return SizedBox();
-                    },
                   ),
                   CustomText(
                     text: football.team2!.name ?? "",

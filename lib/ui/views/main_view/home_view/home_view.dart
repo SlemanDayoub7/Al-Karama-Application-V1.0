@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:al_karama_app/core/enums/shimmer_type.dart';
 import 'package:al_karama_app/ui/shared/colors.dart';
@@ -12,6 +11,8 @@ import 'package:al_karama_app/ui/views/main_view/home_view/home_controller.dart'
 import 'package:al_karama_app/ui/shared/shared_widgets/image_slider.dart';
 import 'package:al_karama_app/ui/views/stuff_view/stuff_view.dart';
 import 'package:get/get.dart';
+
+import '../../../shared/custom_widgets/custom_image.dart';
 
 class HomeView extends StatelessWidget {
   HomeView({super.key});
@@ -89,17 +90,12 @@ class HomeView extends StatelessWidget {
                                   color: AppColors.blueColorOne),
                               child: Row(
                                 children: [
-                                  Image.network(
-                                    controller.nextMatch.value.player!.image!,
+                                  CustomImage(
+                                    url: controller
+                                        .nextMatch.value.player!.image!,
                                     width: screenWidth(3.2),
                                     height: screenWidth(1.2),
                                     fit: BoxFit.fill,
-                                    errorBuilder: (context, error, stackTrace) {
-                                      return SizedBox(
-                                        width: screenWidth(3.2),
-                                        height: screenWidth(1.2),
-                                      );
-                                    },
                                   ),
                                   Expanded(
                                     flex: 2,
@@ -219,9 +215,12 @@ class HomeView extends StatelessWidget {
                       )
                     : controller.news.length == 0
                         ? SizedBox()
-                        : CustomText(
-                            text: "آخر الأخبار",
-                            styleType: TextStyleType.CUSTOMTITLE,
+                        : Padding(
+                            padding: EdgeInsets.only(right: screenWidth(30)),
+                            child: CustomText(
+                              text: "آخر الأخبار",
+                              styleType: TextStyleType.CUSTOMTITLE,
+                            ),
                           )),
                 SizedBox(
                   height: screenWidth(20),

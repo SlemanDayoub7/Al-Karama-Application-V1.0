@@ -24,9 +24,10 @@ class MatchDetailView extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: AppColors.backGroundColor,
         appBar: CustomAppBar(
           haveIconBack: true,
-          title: "تفاصيل المباره",
+          title: "تفاصيل المبارة",
         ),
         body: RefreshIndicator(
           color: AppColors.blueColorOne,
@@ -124,24 +125,29 @@ class MatchDetailView extends StatelessWidget {
                                 child: GridView.builder(
                                   gridDelegate:
                                       SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisSpacing: screenWidth(40),
+                                    crossAxisSpacing: screenWidth(30),
+                                    mainAxisSpacing: screenWidth(30),
                                     childAspectRatio: 0.8,
                                     crossAxisCount: 2,
                                   ),
                                   itemCount:
-                                      controller.match.value.beanched!.length,
+                                      controller.match.value.beanched!.length +
+                                          10,
                                   physics: NeverScrollableScrollPhysics(),
                                   shrinkWrap: true,
                                   itemBuilder:
                                       (BuildContext context, int index) {
                                     return CustomPlayerCart(
                                       cartType: CartType.BENCH,
-                                      beanched: controller
-                                          .match.value.beanched![index],
+                                      beanched:
+                                          controller.match.value.beanched![0],
                                     );
                                   },
                                 ),
                               ),
+              ),
+              SizedBox(
+                height: screenWidth(20),
               )
             ],
           ),

@@ -1,4 +1,5 @@
 import 'package:al_karama_app/core/data/models/match_detail_model.dart';
+import 'package:al_karama_app/ui/shared/custom_widgets/custom_image.dart';
 import 'package:flutter/material.dart';
 import 'package:al_karama_app/core/data/models/stuff_model.dart';
 import 'package:al_karama_app/core/enums/cart_type.dart';
@@ -74,11 +75,8 @@ class CustomPlayerCart extends StatelessWidget {
                             width: screenWidth(2.8),
                             height: screenWidth(2.2),
                             child: Center(
-                              child: Image.network(
-                                beanched!.image ?? "",
-                                errorBuilder: (context, error, stackTrace) {
-                                  return SizedBox();
-                                },
+                              child: CustomImage(
+                                url: beanched!.image ?? "",
                                 width: screenWidth(2.8),
                                 fit: BoxFit.fill,
                                 height: screenWidth(2.2),
@@ -213,16 +211,13 @@ class CustomPlayerCart extends StatelessWidget {
                             width: screenWidth(2.8),
                             height: screenWidth(2.2),
                             child: Center(
-                              child: Image.network(
-                                cartType == CartType.PLAYER ||
+                              child: CustomImage(
+                                url: cartType == CartType.PLAYER ||
                                         cartType == CartType.GOALKEAPR
                                     ? player!.image ?? ""
                                     : cartType == CartType.SWITCH
                                         ? switchPlayer!.image ?? ""
                                         : manager!.image ?? "",
-                                errorBuilder: (context, error, stackTrace) {
-                                  return SizedBox();
-                                },
                                 width: screenWidth(2.8),
                                 fit: BoxFit.fill,
                                 height: screenWidth(2.2),

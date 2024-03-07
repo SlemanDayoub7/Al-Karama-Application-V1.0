@@ -9,6 +9,7 @@ import 'package:al_karama_app/ui/shared/utils.dart';
 import 'package:al_karama_app/ui/views/main_view/matches_view/matches_controller.dart';
 import 'package:al_karama_app/ui/views/match_detail_view/match_detail_view.dart';
 import 'package:al_karama_app/ui/views/main_view/matches_view/matches_view_widgets/custom_match.dart';
+
 import 'package:get/get.dart';
 
 class MatchesView extends StatelessWidget {
@@ -18,6 +19,7 @@ class MatchesView extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: AppColors.backGroundColor,
         appBar: CustomAppBar(
           title: "المباريات",
           haveIconBack: false,
@@ -51,19 +53,21 @@ class MatchesView extends StatelessWidget {
                           ? SizedBox()
                           : Container(
                               width: screenWidth(1),
-                              height: screenWidth(2.1),
+                              height: screenWidth(2),
                               child: Stack(
                                 children: [
-                                  Padding(
-                                    padding: EdgeInsets.only(
-                                        left: screenWidth(30),
-                                        right: screenWidth(30)),
-                                    child: CustomMatch(
-                                      isCurrentMatch: true,
-                                      match: controller.finishedMatch.value
-                                          .football![controller.finishedMatch
-                                              .value.football!.length -
-                                          1],
+                                  Center(
+                                    child: Padding(
+                                      padding: EdgeInsets.only(
+                                          left: screenWidth(30),
+                                          right: screenWidth(30)),
+                                      child: CustomMatch(
+                                        isCurrentMatch: true,
+                                        match: controller.finishedMatch.value
+                                            .football![controller.finishedMatch
+                                                .value.football!.length -
+                                            1],
+                                      ),
                                     ),
                                   ),
                                   Align(

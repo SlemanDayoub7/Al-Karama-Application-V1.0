@@ -26,14 +26,11 @@ class CustomCup extends StatelessWidget {
               border: Border.all(
                   color: AppColors.goldColor, width: screenWidth(200))),
           child: Center(
-            child: Image.network(
-              imageUrl,
+            child: CustomImage(
+              url: imageUrl,
               width: screenWidth(5),
               height: screenWidth(4.4),
               fit: BoxFit.fill,
-              errorBuilder: (context, error, stackTrace) {
-                return SizedBox();
-              },
             ),
           ),
         ),

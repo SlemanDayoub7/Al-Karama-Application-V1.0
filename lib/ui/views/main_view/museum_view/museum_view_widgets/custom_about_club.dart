@@ -22,18 +22,11 @@ class CustomAboutClub extends StatelessWidget {
           ClipRRect(
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-              child: Image.network(imageUrl,
-                  width: screenWidth(1.3), height: screenWidth(3),
-                  errorBuilder: (context, error, stackTrace) {
-                return Container(
-                  child: Image.asset(
-                    "assets/images/pngs/news.png",
-                    fit: BoxFit.contain,
-                  ),
+              child: CustomImage(
+                  url: imageUrl,
                   width: screenWidth(1.3),
                   height: screenWidth(3),
-                );
-              }, fit: BoxFit.fill)),
+                  fit: BoxFit.fill)),
           Expanded(
             child: Container(
               padding: EdgeInsets.only(right: screenWidth(30)),

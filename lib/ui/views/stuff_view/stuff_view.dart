@@ -14,6 +14,8 @@ import 'package:al_karama_app/ui/shared/utils.dart';
 import 'package:al_karama_app/ui/views/stuff_view/stuff_controller.dart';
 import 'package:get/get.dart';
 
+import '../../shared/custom_widgets/custom_image.dart';
+
 class StuffView extends StatelessWidget {
   StuffView({super.key});
   StuffController controller = Get.put(StuffController());
@@ -21,13 +23,13 @@ class StuffView extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-   backgroundColor: AppColors.backGroundColor,
+      backgroundColor: AppColors.backGroundColor,
       appBar: CustomAppBar(
         title: "كادر الادارة و اللاعبين",
         haveIconBack: true,
       ),
       body: RefreshIndicator(
-  color: AppColors.blueColorOne,
+        color: AppColors.blueColorOne,
         onRefresh: () async {
           await controller.getData();
         },
@@ -75,12 +77,9 @@ class StuffView extends StatelessWidget {
                                   ),
                                   Align(
                                       alignment: Alignment.topRight,
-                                      child: Image.network(
-                                        controller.stuff.value.boss!.image!,
-                                        errorBuilder:
-                                            (context, error, stackTrace) {
-                                          return SizedBox();
-                                        },
+                                      child: CustomImage(
+                                        url:
+                                            controller.stuff.value.boss!.image!,
                                         fit: BoxFit.fill,
                                         width: screenWidth(3),
                                         height: screenWidth(1),
@@ -164,14 +163,11 @@ class StuffView extends StatelessWidget {
                               color: AppColors.blueColorOne,
                               borderRadius: BorderRadius.circular(30)),
                           child: Center(
-                              child: Image.network(
-                            controller.stuff.value.wears!.image!,
+                              child: CustomImage(
+                            url: controller.stuff.value.wears!.image!,
                             width: screenWidth(1.4),
                             height: screenWidth(1.4),
                             fit: BoxFit.cover,
-                            errorBuilder: (context, error, stackTrace) {
-                              return SizedBox();
-                            },
                           )),
                         )),
               SizedBox(

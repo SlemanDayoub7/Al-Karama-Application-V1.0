@@ -92,7 +92,7 @@ class MusemumView extends StatelessWidget {
                     //               axis: Axis.horizontal,
                     //             )
                     //           :
-                    //            Image.network(controller.musemum.value.strategies)),
+                    //            CustomImage(url:controller.musemum.value.strategies)),
                     Obx(() => controller.musemum.value.bosses == null ||
                             controller.musemum.value.bosses!.length == 0
                         ? SizedBox()

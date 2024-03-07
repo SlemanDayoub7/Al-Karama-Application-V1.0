@@ -1,3 +1,4 @@
+import 'package:al_karama_app/ui/shared/custom_widgets/custom_image.dart';
 import 'package:al_karama_app/ui/views/landing_view/landing_controller.dart';
 import 'package:al_karama_app/ui/views/main_view/home_view/home_controller.dart';
 import 'package:flutter/material.dart';
@@ -5,6 +6,7 @@ import 'package:al_karama_app/ui/shared/colors.dart';
 import 'package:al_karama_app/ui/shared/custom_widgets/custom_text.dart';
 import 'package:al_karama_app/ui/shared/utils.dart';
 import 'package:flutter/widgets.dart';
+
 import 'package:get/get.dart';
 
 import '../../../core/data/models/sports_model.dart';
@@ -82,8 +84,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                                 child: Container(
                                     width: screenWidth(11),
                                     height: screenWidth(11),
-                                    child: Image.network(
-                                      controller
+                                    child: CustomImage(
+                                      url: controller
                                               .sports[controller
                                                   .selectedSport.value]
                                               .image ??
@@ -91,10 +93,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                                       height: screenWidth(11),
                                       width: screenWidth(11),
                                       fit: BoxFit.fill,
-                                      errorBuilder:
-                                          (context, error, stackTrace) {
-                                        return SizedBox();
-                                      },
                                     )),
                                 itemBuilder: (context) {
                                   return [
@@ -126,26 +124,28 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                                               Container(
                                                   width: screenWidth(11),
                                                   height: screenWidth(11),
-                                                  child: Image.network(
-                                                    controller.sports[index]
+                                                  child: CustomImage(
+                                                    url: controller
+                                                            .sports[index]
                                                             .image ??
                                                         "",
                                                     height: screenWidth(10),
                                                     width: screenWidth(10),
                                                     fit: BoxFit.fill,
-                                                    errorBuilder: (context,
-                                                        error, stackTrace) {
-                                                      return SizedBox();
-                                                    },
                                                   )),
                                               SizedBox(
                                                 width: screenWidth(30),
                                               ),
-                                              CustomText(
-                                                text: controller
-                                                        .sports[index].name ??
-                                                    "",
-                                                textColor: AppColors.whiteColor,
+                                              Expanded(
+                                                child: CustomText(
+                                                  styleType:
+                                                      TextStyleType.SMALL,
+                                                  text: controller
+                                                          .sports[index].name ??
+                                                      "",
+                                                  textColor:
+                                                      AppColors.whiteColor,
+                                                ),
                                               )
                                             ],
                                           ),

@@ -7,6 +7,8 @@ import 'package:al_karama_app/ui/shared/custom_widgets/custom_text.dart';
 import 'package:al_karama_app/ui/shared/utils.dart';
 import 'package:flutter/widgets.dart';
 
+import '../../../../shared/custom_widgets/custom_image.dart';
+
 class CustomMatch extends StatelessWidget {
   final bool isCurrentMatch;
   final Football match;
@@ -35,16 +37,11 @@ class CustomMatch extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.network(
-                match.team1!.logo!,
+              CustomImage(
+                url: match.team1!.logo!,
                 width: screenWidth(5.5),
                 height: screenWidth(5.5),
-                errorBuilder: (context, error, stackTrace) {
-                  return SizedBox(
-                    width: screenWidth(5.5),
-                    height: screenWidth(5.5),
-                  );
-                },
+                fit: BoxFit.cover,
               ),
               SizedBox(
                 height: screenWidth(50),
@@ -138,16 +135,11 @@ class CustomMatch extends StatelessWidget {
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.network(
-                match.team2!.logo!,
+              CustomImage(
+                url: match.team2!.logo!,
                 width: screenWidth(5.5),
                 height: screenWidth(5.5),
-                errorBuilder: (context, error, stackTrace) {
-                  return SizedBox(
-                    width: screenWidth(5.5),
-                    height: screenWidth(5.5),
-                  );
-                },
+                fit: BoxFit.fill,
               ),
               SizedBox(
                 height: screenWidth(50),

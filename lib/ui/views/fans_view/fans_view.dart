@@ -8,6 +8,8 @@ import 'package:al_karama_app/ui/shared/utils.dart';
 import 'package:al_karama_app/ui/views/fans_view/fans_view_controller.dart';
 import 'package:get/get.dart';
 
+import '../../shared/custom_widgets/custom_image.dart';
+
 class FansView extends StatelessWidget {
   FansView({super.key});
   fansController controller = Get.put(fansController());
@@ -40,11 +42,12 @@ class FansView extends StatelessWidget {
                           )
                         : Container(
                             height: screenWidth(1.8),
-                            child: Image.network(
-                              controller.fans[0].image ?? "",
-                              errorBuilder: (context, error, stackTrace) {
-                                return SizedBox();
-                              },
+                            width: screenWidth(1),
+                            child: CustomImage(
+                              url: controller.fans[0].image ?? "",
+                              height: screenWidth(1.8),
+                              width: screenWidth(1),
+                              fit: BoxFit.cover,
                             ))),
                     SizedBox(
                       height: screenWidth(30),
@@ -272,7 +275,7 @@ class FansView extends StatelessWidget {
                                     ? SizedBox()
                                     : Container(
                                         width: screenWidth(1),
-                                        height: screenWidth(2),
+                                        height: screenWidth(4),
                                         child: ListView.separated(
                                           separatorBuilder: (context, index) {
                                             return SizedBox(
@@ -292,24 +295,29 @@ class FansView extends StatelessWidget {
                                                     "");
                                               },
                                               child: Container(
-                                                width: screenWidth(2),
-                                                height: screenWidth(2),
+                                                width: screenWidth(3.5),
+                                                height: screenWidth(3.5),
                                                 decoration: BoxDecoration(
                                                   borderRadius:
-                                                      BorderRadius.circular(15),
+                                                      BorderRadius.circular(25),
                                                 ),
                                                 child: Stack(
                                                   children: [
-                                                    Image.network(
-                                                      controller
-                                                          .imagesUrl[index],
-                                                      width: screenWidth(5),
-                                                      height: screenWidth(5),
-                                                      fit: BoxFit.cover,
-                                                      errorBuilder: (context,
-                                                          error, stackTrace) {
-                                                        return SizedBox();
-                                                      },
+                                                    Center(
+                                                      child: ClipRRect(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(25),
+                                                        child: CustomImage(
+                                                          url: controller
+                                                              .imagesUrl[index],
+                                                          width:
+                                                              screenWidth(3.5),
+                                                          height:
+                                                              screenWidth(3.5),
+                                                          fit: BoxFit.cover,
+                                                        ),
+                                                      ),
                                                     ),
                                                     Center(
                                                       child: Image.asset(

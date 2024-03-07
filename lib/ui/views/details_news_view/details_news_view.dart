@@ -7,6 +7,8 @@ import 'package:al_karama_app/ui/shared/utils.dart';
 import 'package:al_karama_app/ui/views/details_news_view/details_news_widgets/custom_statistics.dart';
 import 'package:al_karama_app/ui/shared/shared_widgets/custom_video.dart';
 
+import '../../shared/custom_widgets/custom_image.dart';
+
 class DetailsNewsView extends StatelessWidget {
   final NewsModel newsModel;
   final List<String> imagesUrl;
@@ -31,17 +33,11 @@ class DetailsNewsView extends StatelessWidget {
                   topLeft: Radius.circular(15),
                   topRight: Radius.circular(15),
                 ),
-                child: Image.network(
-                  newsModel.image!,
+                child: CustomImage(
+                  url: newsModel.image!,
                   width: screenWidth(1),
                   fit: BoxFit.fill,
                   height: screenWidth(1.8),
-                  errorBuilder: (context, error, stackTrace) {
-                    return SizedBox(
-                      width: screenWidth(1),
-                      height: screenWidth(1.8),
-                    );
-                  },
                 ),
               ),
             ),

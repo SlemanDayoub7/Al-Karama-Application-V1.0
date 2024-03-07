@@ -33,10 +33,10 @@ class ImageSlider extends StatelessWidget {
             ...List.generate(imageUrls!.length, (index) {
               return imageUrls != null
                   ? CustomImage(
-                      imageUrl: imageUrls![0],
+                      url: imageUrls![0],
                       width: screenWidth(1),
                       height: screenWidth(1),
-                      boxFit: BoxFit.fill)
+                      fit: BoxFit.fill)
                   : SizedBox();
             })
           ],
