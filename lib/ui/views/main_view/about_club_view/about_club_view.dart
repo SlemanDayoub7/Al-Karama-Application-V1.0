@@ -40,9 +40,9 @@ class AboutClubView extends StatelessWidget {
         ),
         body: Padding(
           padding: EdgeInsets.only(
-              right: screenWidth(40),
-              left: screenWidth(40),
-              bottom: screenWidth(40)),
+            right: screenWidth(40),
+            left: screenWidth(40),
+          ),
           child: RefreshIndicator(
             color: AppColors.blueColorOne,
             onRefresh: () async {

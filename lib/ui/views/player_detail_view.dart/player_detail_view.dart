@@ -181,9 +181,8 @@ class PlayerDetailView extends StatelessWidget {
                               height: screenWidth(20),
                             ),
                             CustomText(
-                              text: (controller.playerDetail.value.career ??
-                                      "") +
-                                  "ssssssssssssssssssssssssssssssssssssssssssssssssssssss",
+                              text:
+                                  (controller.playerDetail.value.career ?? ""),
                               styleType: TextStyleType.BODY,
                               textColor: AppColors.whiteColor,
                               overflow: TextOverflow.visible,
