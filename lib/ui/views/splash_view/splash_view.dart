@@ -14,21 +14,6 @@ class SplashView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.blueColorOne,
-      body: Stack(children: [
-        Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Image.asset(
-                "assets/images/pngs/karama.png",
-                fit: BoxFit.cover,
-                width: screenWidth(5),
-                height: screenWidth(5),
-              ),
-            ],
-          ),
-        ),
-      ]),
     );
   }
 }
