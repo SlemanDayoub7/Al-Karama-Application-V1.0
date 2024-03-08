@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 class splashController extends GetxController {
   @override
   void onInit() async {
-    Future.delayed(Duration(microseconds: 50))
+    Future.delayed(Duration(milliseconds: 1))
         .then((value) => Get.off(() => LandingView()));
     super.onInit();
   }

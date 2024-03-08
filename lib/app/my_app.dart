@@ -8,6 +8,8 @@ import 'package:al_karama_app/ui/shared/colors.dart';
 import 'package:al_karama_app/ui/shared/utils.dart';
 import 'package:get/get.dart';
 
+import '../ui/views/landing_view/landing_view.dart';
+
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
   @override

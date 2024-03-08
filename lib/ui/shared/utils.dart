@@ -65,4 +65,4 @@ String getImageOfVideo(String value) {
 
 SharedPrefrenceRepository get storage => Get.find<SharedPrefrenceRepository>();
 ConnectivitySerivce get connectivitySerivce => Get.find<ConnectivitySerivce>();
-bool isOnline = false;
+bool isOnline = true;

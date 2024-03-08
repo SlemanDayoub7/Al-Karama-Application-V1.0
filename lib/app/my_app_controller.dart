@@ -12,11 +12,11 @@ class MyAppController extends GetxController {
   RxList<SportsModel> sports = <SportsModel>[].obs;
   Connectivity connectivity = Connectivity();
   void onInit() async {
-    checkConnection();
+    await checkConnection();
     super.onInit();
   }
 
-  void checkConnection() async {
+  checkConnection() async {
     ConnectivityStatus status =
         connectivitySerivce.getStatus(await connectivity.checkConnectivity());
 

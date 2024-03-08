@@ -27,11 +27,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         automaticallyImplyLeading: false,
         flexibleSpace: FlexibleSpaceBar(
           background: Container(
-            padding: EdgeInsets.all(screenWidth(30)),
+            padding: EdgeInsets.all(screenWidth(26)),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(12),
-                    bottomRight: Radius.circular(12)),
+                    bottomLeft: Radius.circular(25),
+                    bottomRight: Radius.circular(25)),
                 color: AppColors.blueColorOne),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
