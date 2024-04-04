@@ -7,38 +7,49 @@ import 'package:al_karama_app/ui/views/match_detail_view/match_detail_controller
 import 'package:al_karama_app/ui/views/match_detail_view/match_detail_view.dart';
 import 'package:get/get.dart';
 
-class MatcheController extends GetxController {
-  RxBool isLoading = true.obs;
-  bool haveWrong = false;
-  Rx<MatchModel> matches = MatchModel().obs;
-  Rx<MatchModel> finishedMatch = MatchModel().obs;
+class MatchesController extends GetxController {
+  final RxBool _isLoading = true.obs;
+  final RxBool _haveWrong = false.obs;
+  final Rx<MatchModel> _matches = MatchModel().obs;
+  final Rx<MatchModel> _finishedMatches = MatchModel().obs;
+
+  bool get isLoading => _isLoading.value;
+  bool get haveWrong => _haveWrong.value;
+  MatchModel get matches => _matches.value;
+  MatchModel get finishedMatches => _finishedMatches.value;
+
   @override
   void onInit() async {
     await getData();
     super.onInit();
   }
 
-  goToMatchDetail(Football football) {
-    Get.to(() => MatchDetailView(
-          football: football,
-        ));
+  void goToMatchDetail(Football football) {
+    Get.to(MatchDetailView(football: football));
   }
 
-  getData() async {
+  Future<void> getData() async {
     if (!isOnline) {
       CustomToast.showMeassge(message: tr("key_no_internet"));
       return;
     }
-    isLoading.value = true;
-    matches.value = MatchModel();
-    finishedMatch.value = MatchModel();
-    await MatchRepository().getMatches().then((value) =>
-        value.fold((l) => haveWrong = true, (r) => matches.value = r));
-    await MatchRepository().getFinishedMatch().then((value) =>
-        value.fold((l) => haveWrong = true, (r) => finishedMatch.value = r));
-    if (haveWrong) {
+
+    _isLoading.value = true;
+    _matches.value = MatchModel();
+    _finishedMatches.value = MatchModel();
+
+    final matchesResult = await MatchRepository().getMatches();
+    final finishedMatchesResult = await MatchRepository().getFinishedMatch();
+
+    _isLoading.value = false;
+
+    if (matchesResult.isLeft() || finishedMatchesResult.isLeft()) {
+      _haveWrong.value = true;
       CustomToast.showMeassge(message: tr("key_wrong_message"));
+    } else {
+      _matches.value = matchesResult.getOrElse(() => MatchModel());
+      _finishedMatches.value =
+          finishedMatchesResult.getOrElse(() => MatchModel());
     }
-    isLoading.value = false;
   }
 }

@@ -1,18 +1,19 @@
+import 'package:al_karama_app/ui/shared/shared_widgets/custom_news.dart';
+import 'package:al_karama_app/ui/shared/shared_widgets/custom_refresh.dart';
+import 'package:al_karama_app/ui/shared/shared_widgets/custom_shimmer.dart';
 import 'package:flutter/material.dart';
-import 'package:al_karama_app/core/enums/shimmer_type.dart';
 import 'package:al_karama_app/ui/shared/colors.dart';
 import 'package:al_karama_app/ui/shared/custom_widgets/custom_app_bar.dart';
 import 'package:al_karama_app/ui/shared/custom_widgets/custom_text.dart';
-import 'package:al_karama_app/ui/shared/shared_widgets/custom_news.dart';
-import 'package:al_karama_app/ui/shared/shared_widgets/custom_shimmer.dart';
-import 'package:al_karama_app/ui/shared/shared_widgets/custom_team.dart';
 import 'package:al_karama_app/ui/shared/utils.dart';
 import 'package:al_karama_app/ui/views/main_view/home_view/home_controller.dart';
-import 'package:al_karama_app/ui/shared/shared_widgets/image_slider.dart';
 import 'package:al_karama_app/ui/views/stuff_view/stuff_view.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 
+import '../../../../core/enums/shimmer_type.dart';
 import '../../../shared/custom_widgets/custom_image.dart';
+import 'home_view_widgets/next_match_widget.dart';
 
 class HomeView extends StatelessWidget {
   HomeView({super.key});
@@ -26,7 +27,6 @@ class HomeView extends StatelessWidget {
           padding: EdgeInsets.only(bottom: screenWidth(4)),
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-                foregroundColor: AppColors.whiteColor,
                 backgroundColor: AppColors.blueColorOne,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30))),
@@ -44,222 +44,142 @@ class HomeView extends StatelessWidget {
           title: "نادي الكرامة الرياضي",
           haveIconBack: false,
         ),
-        body: Padding(
-          padding: EdgeInsets.only(
-              right: screenWidth(40),
-              left: screenWidth(40),
-              bottom: screenWidth(40)),
-          child: RefreshIndicator(
-            color: AppColors.blueColorOne,
-            onRefresh: () async {
-              await controller.getData();
-            },
-            child: ListView(
-              children: [
-                SizedBox(
-                  height: screenWidth(20),
-                ),
-                Obx(
-                  () => controller.isLoading.value
-                      ? CustomShimmer(
-                          shimmerType: ShimmerType.CUSTOM,
-                          widget: Container(
-                            decoration: BoxDecoration(
-                                color: AppColors.whiteColor,
-                                borderRadius: BorderRadius.circular(20)),
-                            width: screenWidth(1),
-                            height: screenWidth(1.7),
-                          ),
-                        )
-                      : controller.nextMatch.value.channel == null
-                          ? SizedBox()
-                          : Container(
-                              margin: EdgeInsets.only(
-                                  left: screenWidth(40),
-                                  right: screenWidth(40)),
-                              width: screenWidth(1),
-                              height: screenWidth(1.5),
-                              decoration: BoxDecoration(
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color: AppColors.grayColorTwo,
-                                        blurRadius: 1,
-                                        offset: Offset(2, 2))
-                                  ],
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: AppColors.blueColorOne),
-                              child: Row(
-                                children: [
-                                  CustomImage(
-                                    url: controller
-                                        .nextMatch.value.player!.image!,
-                                    width: screenWidth(3.2),
-                                    height: screenWidth(1.2),
-                                    fit: BoxFit.fill,
-                                  ),
-                                  Expanded(
-                                    flex: 2,
-                                    child: Padding(
-                                      padding: EdgeInsets.all(screenWidth(30)),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Container(
-                                            width: double.infinity,
-                                            child: Center(
-                                              child: CustomText(
-                                                  styleType:
-                                                      TextStyleType.SUBTITLE,
-                                                  text: "المباراة القادمة",
-                                                  textColor:
-                                                      AppColors.whiteColor),
-                                            ),
-                                          ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              CustomTeam(
-                                                  name: controller.nextMatch
-                                                              .value!.team1 !=
-                                                          null
-                                                      ? controller
-                                                              .nextMatch
-                                                              .value!
-                                                              .team1!
-                                                              .name ??
-                                                          ""
-                                                      : "",
-                                                  imageUrl: controller.nextMatch
-                                                          .value.team1!.logo ??
-                                                      "",
-                                                  textColor:
-                                                      AppColors.whiteColor),
-                                              CustomText(
-                                                text: "VS",
-                                                styleType:
-                                                    TextStyleType.SUBTITLE,
-                                                textColor: AppColors.whiteColor,
-                                              ),
-                                              CustomTeam(
-                                                  name: controller.nextMatch
-                                                              .value!.team2 !=
-                                                          null
-                                                      ? controller
-                                                              .nextMatch
-                                                              .value!
-                                                              .team2!
-                                                              .name ??
-                                                          ""
-                                                      : "",
-                                                  imageUrl: controller.nextMatch
-                                                          .value.team2!.logo ??
-                                                      "",
-                                                  textColor:
-                                                      AppColors.whiteColor)
-                                            ],
-                                          ),
-                                          customRow(
-                                            imageUrl:
-                                                "assets/images/pngs/date.png",
-                                            text: controller
-                                                    .nextMatch.value!.date ??
-                                                "",
-                                          ),
-                                          customRow(
-                                            imageUrl:
-                                                "assets/images/pngs/time.png",
-                                            text: controller
-                                                    .nextMatch.value!.time ??
-                                                "",
-                                          ),
-                                          customRow(
-                                            imageUrl:
-                                                "assets/images/pngs/location.png",
-                                            text: controller.nextMatch.value!
-                                                    .playGround ??
-                                                "",
-                                          ),
-                                          customRow(
-                                            imageUrl:
-                                                "assets/images/pngs/live.png",
-                                            text: controller
-                                                    .nextMatch.value.channel ??
-                                                "",
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                ),
-                SizedBox(
-                  height: screenWidth(20),
-                ),
-                Obx(() => controller.isLoading.value
+        body: RefreshableList(
+          onRefresh: controller.getData,
+          widget: ListView(
+            physics: AlwaysScrollableScrollPhysics(),
+            shrinkWrap: true,
+            children: [
+              Obx(() => controller.isLoading.value
+                  ? CustomShimmer(
+                      shimmerType: ShimmerType.CUSTOM,
+                      widget: SizedBox(),
+                    )
+                  : controller.banners.length == 0
+                      ? SizedBox()
+                      : Container(
+                          margin: EdgeInsets.only(top: screenWidth(20)),
+                          height: screenWidth(2.3),
+                          width: screenWidth(1),
+                          child: controller.banners.length == 1
+                              ? Container(
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                          color: AppColors.blueColorOne,
+                                          width: screenWidth(200))),
+                                  child: CustomImage(
+                                      url: controller.banners[0].image ?? "",
+                                      width: screenWidth(1),
+                                      height: screenWidth(2),
+                                      fit: BoxFit.fill),
+                                )
+                              : ListView.separated(
+                                  separatorBuilder: (context, index) {
+                                    return SizedBox(
+                                      width: screenWidth(80),
+                                    );
+                                  },
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: controller.banners.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return Container(
+                                      decoration: BoxDecoration(
+                                          border: Border.all(
+                                              color: AppColors.grayColorTwo,
+                                              width: 1)),
+                                      child: CustomImage(
+                                          url:
+                                              controller.banners[index].image ??
+                                                  "",
+                                          width: screenWidth(2.2),
+                                          height: screenWidth(2),
+                                          fit: BoxFit.fill),
+                                    );
+                                  },
+                                ))),
+              Obx(
+                () => controller.isLoading.value
                     ? CustomShimmer(
                         shimmerType: ShimmerType.CUSTOM,
                         widget: Container(
-                          margin: EdgeInsets.only(left: screenWidth(2)),
-                          height: screenWidth(11),
-                          width: screenWidth(5),
                           decoration: BoxDecoration(
                               color: AppColors.whiteColor,
-                              borderRadius: BorderRadius.circular(30)),
+                              borderRadius: BorderRadius.circular(20)),
+                          width: screenWidth(1),
+                          height: screenWidth(1.7),
                         ),
                       )
-                    : controller.news.length == 0
+                    : controller.nextMatch.value.channel == null
                         ? SizedBox()
-                        : Padding(
-                            padding: EdgeInsets.only(right: screenWidth(30)),
-                            child: CustomText(
-                              text: "آخر الأخبار",
-                              styleType: TextStyleType.CUSTOMTITLE,
+                        : NextMatchWidget(controller: controller),
+              ),
+              SizedBox(
+                height: screenWidth(20),
+              ),
+              Obx(() => controller.isLoading.value
+                  ? CustomShimmer(
+                      shimmerType: ShimmerType.CUSTOM,
+                      widget: Container(
+                        margin: EdgeInsets.only(left: screenWidth(2)),
+                        height: screenWidth(11),
+                        width: screenWidth(5),
+                        decoration: BoxDecoration(
+                            color: AppColors.whiteColor,
+                            borderRadius: BorderRadius.circular(30)),
+                      ),
+                    )
+                  : controller.news.length == 0
+                      ? SizedBox()
+                      : CustomText(
+                          text: "آخر الأخبار",
+                          styleType: TextStyleType.CUSTOMTITLE,
+                        )),
+              SizedBox(
+                height: screenWidth(20),
+              ),
+              Obx(() => !controller.isLoading.value
+                  ? AnimationLimiter(
+                      child: ListView.separated(
+                        physics: NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        separatorBuilder: (context, index) {
+                          return SizedBox(
+                            height: screenWidth(40),
+                          );
+                        },
+                        itemCount: controller.news.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Obx(
+                            () => AnimationConfiguration.staggeredList(
+                              position: index,
+                              child: SlideAnimation(
+                                duration: Duration(milliseconds: 600),
+                                horizontalOffset: screenWidth(2),
+                                child: FadeInAnimation(
+                                  child: CustomNews(
+                                      onTap: () {
+                                        controller.openCustomeNews(index);
+                                      },
+                                      newsModel: controller.news[index],
+                                      imageUrl: controller.news[index].image,
+                                      description:
+                                          controller.news[index].content ?? "",
+                                      date: controller.news[index].date ?? "",
+                                      viewers:
+                                          controller.news[index].content ?? ""),
+                                ),
+                              ),
                             ),
-                          )),
-                SizedBox(
-                  height: screenWidth(20),
-                ),
-                Obx(() => !controller.isLoading.value
-                    ? Scrollbar(
-                        thickness: 1,
-                        child: ListView.separated(
-                          physics: NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          separatorBuilder: (context, index) {
-                            return SizedBox(
-                              height: screenWidth(40),
-                            );
-                          },
-                          itemCount: controller.news.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return Obx(
-                              () => CustomNews(
-                                  onTap: () {
-                                    controller.openCustomeNews(index);
-                                  },
-                                  newsModel: controller.news[index],
-                                  imageUrl: controller.news[index].image,
-                                  description:
-                                      controller.news[index].content ?? "",
-                                  date: controller.news[index].date ?? "",
-                                  viewers:
-                                      controller.news[index].content ?? ""),
-                            );
-                          },
-                        ),
-                      )
-                    : CustomShimmer(shimmerType: ShimmerType.LIST)),
-                SizedBox(
-                  height: screenWidth(4),
-                ),
-              ],
-            ),
+                          );
+                        },
+                      ),
+                    )
+                  : CustomShimmer(shimmerType: ShimmerType.LIST)),
+              SizedBox(
+                height: screenWidth(2),
+              )
+            ],
           ),
         ),
       ),

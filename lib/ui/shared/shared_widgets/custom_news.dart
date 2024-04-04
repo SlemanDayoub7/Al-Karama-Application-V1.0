@@ -30,14 +30,7 @@ class CustomNews extends StatelessWidget {
         onTap!();
       },
       child: Container(
-        margin: EdgeInsets.only(left: screenWidth(50), right: screenWidth(50)),
         decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-                color: AppColors.grayColorTwo,
-                blurRadius: 1,
-                offset: Offset(2, 2))
-          ],
           borderRadius: BorderRadius.circular(20),
           color: AppColors.whiteColor,
         ),

@@ -11,29 +11,34 @@ import '../../../../core/translation/app_translation.dart';
 import '../../../shared/custom_widgets/custom_toast.dart';
 
 class AboutClubController extends GetxController {
-  RxBool isLoading = true.obs;
-  bool haveWrong = false;
-  Rx<MuseumModel> musemum = MuseumModel().obs;
+  final _musemum = MuseumModel().obs;
+  final _haveWrong = false.obs;
+
+  bool get isLoading => _haveWrong.value;
+  MuseumModel get musemum => _musemum.value;
+
   @override
-  void onInit() async {
+  Future<void> onInit() async {
     await getData();
 
     super.onInit();
   }
 
-  getData() async {
+  Future<void> getData() async {
     if (!isOnline) {
       CustomToast.showMeassge(message: tr("key_no_internet"));
       return;
     }
 
-    isLoading.value = true;
-    musemum.value = MuseumModel();
-    await MuseumRepository().getMuseum().then((value) =>
-        value.fold((l) => haveWrong = true, (r) => musemum.value = r));
-    if (haveWrong) {
+    _haveWrong.value = true;
+    _musemum.value = MuseumModel();
+    final result = await MuseumRepository().getMuseum();
+    _haveWrong.value = result.fold((l) => true, (r) => false);
+    if (_haveWrong.value) {
       CustomToast.showMeassge(message: tr("key_wrong_message"));
+    } else {
+      _musemum.value = result.getOrElse(() => MuseumModel());
     }
-    isLoading.value = haveWrong = false;
+    _haveWrong.value = false;
   }
 }

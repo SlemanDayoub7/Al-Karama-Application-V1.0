@@ -1,3 +1,4 @@
+import 'package:al_karama_app/ui/shared/shared_widgets/custom_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:al_karama_app/core/enums/shimmer_type.dart';
 import 'package:al_karama_app/ui/shared/colors.dart';
@@ -16,12 +17,11 @@ class FullTabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: AppColors.backGroundColor,
         appBar: CustomAppBar(title: "جدول الترتيب"),
-        body: RefreshIndicator(
-          onRefresh: () async {
-            await controller.getData();
-          },
-          child: ListView(
+        body: RefreshableList(
+          onRefresh: controller.getData,
+          widget: ListView(
             children: [
               SizedBox(height: screenWidth(10)),
               Obx(
@@ -29,8 +29,6 @@ class FullTabel extends StatelessWidget {
                     ? CustomShimmer(
                         shimmerType: ShimmerType.CUSTOM,
                         widget: Container(
-                          margin: EdgeInsets.only(
-                              left: screenWidth(30), right: screenWidth(30)),
                           width: screenWidth(1),
                           height: screenWidth(8.5),
                           child: ListView.separated(
@@ -56,8 +54,6 @@ class FullTabel extends StatelessWidget {
                     : controller.seasons.length == 0
                         ? SizedBox()
                         : Container(
-                            margin: EdgeInsets.only(
-                                left: screenWidth(30), right: screenWidth(30)),
                             width: screenWidth(1),
                             height: screenWidth(8.5),
                             child: ListView.separated(
@@ -118,17 +114,13 @@ class FullTabel extends StatelessWidget {
                 height: screenWidth(20),
               ),
               Obx(() => controller.isLoading.value
-                  ? Padding(
-                      padding: EdgeInsets.only(
-                          left: screenWidth(20), right: screenWidth(20)),
-                      child: CustomShimmer(
-                        shimmerType: ShimmerType.CUSTOM,
-                        widget: Image.asset(
-                          "assets/images/pngs/shimmer_table.png",
-                          width: screenWidth(1),
-                          height: screenWidth(1),
-                          fit: BoxFit.fill,
-                        ),
+                  ? CustomShimmer(
+                      shimmerType: ShimmerType.CUSTOM,
+                      widget: Image.asset(
+                        "assets/images/pngs/shimmer_table.png",
+                        width: screenWidth(1),
+                        height: screenWidth(1),
+                        fit: BoxFit.fill,
                       ),
                     )
                   : RankingTabel(

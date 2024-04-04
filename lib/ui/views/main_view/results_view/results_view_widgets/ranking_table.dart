@@ -20,8 +20,6 @@ class RankingTabel extends StatelessWidget {
       () => controller.standing.value.football == null
           ? SizedBox()
           : Container(
-              margin: EdgeInsets.only(
-                  left: screenWidth(30), right: screenWidth(30)),
               height: visibileItem == 2 ? screenWidth(1) : null,
               width: screenWidth(1),
               child: Stack(
@@ -36,14 +34,9 @@ class RankingTabel extends StatelessWidget {
                           height: screenWidth(3.5),
                           fit: BoxFit.fill,
                         ),
-                        SizedBox(
-                          height: screenWidth(40),
-                        ),
                         Container(
-                          margin: EdgeInsets.only(
-                              left: screenWidth(30),
-                              right: screenWidth(30),
-                              bottom: screenWidth(30)),
+                          color: AppColors.grayColor,
+                          padding: EdgeInsets.all(screenWidth(50)),
                           child: Table(
                             columnWidths: {
                               0: FlexColumnWidth(),

@@ -1,3 +1,4 @@
+import 'package:al_karama_app/ui/shared/shared_widgets/custom_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:al_karama_app/core/data/models/stuff_model.dart';
 import 'package:al_karama_app/core/enums/cart_type.dart';
@@ -28,223 +29,215 @@ class StuffView extends StatelessWidget {
         title: "كادر الادارة و اللاعبين",
         haveIconBack: true,
       ),
-      body: RefreshIndicator(
-        color: AppColors.blueColorOne,
-        onRefresh: () async {
-          await controller.getData();
-        },
-        child: Padding(
-          padding: EdgeInsets.only(
-            right: screenWidth(30),
-            left: screenWidth(30),
-          ),
-          child: ListView(
-            children: [
-              SizedBox(
-                height: screenWidth(20),
-              ),
-              Obx(() => controller.isLoading.value
-                  ? CustomShimmer(
-                      shimmerType: ShimmerType.CUSTOM,
-                      widget: Container(
-                        decoration: BoxDecoration(
-                            color: AppColors.backGroundColor,
-                            borderRadius: BorderRadius.circular(30)),
-                        width: screenWidth(1),
-                        height: screenWidth(3),
-                      ),
-                    )
-                  : controller.stuff.value.boss != null
-                      ? controller.stuff.value.boss!.name != null &&
-                              controller.stuff.value.boss!.image != null
-                          ? Container(
-                              width: screenWidth(1),
-                              height: screenWidth(2),
-                              child: Stack(
-                                fit: StackFit.loose,
-                                children: [
-                                  Align(
-                                    alignment: Alignment.bottomCenter,
-                                    child: Container(
-                                      width: screenWidth(1),
-                                      height: screenWidth(3),
-                                      decoration: BoxDecoration(
-                                          image: DecorationImage(
-                                              fit: BoxFit.fill,
-                                              image: AssetImage(
-                                                  "assets/images/pngs/boss_background.png"))),
+      body: RefreshableList(
+        onRefresh: controller.getData,
+        widget:  ListView(
+          shrinkWrap: true,
+          children: [
+            SizedBox(
+              height: screenWidth(20),
+            ),
+            Obx(() => controller.isLoading.value
+                ? CustomShimmer(
+                    shimmerType: ShimmerType.CUSTOM,
+                    widget: Container(
+                      decoration: BoxDecoration(
+                          color: AppColors.backGroundColor,
+                          borderRadius: BorderRadius.circular(30)),
+                      width: screenWidth(1),
+                      height: screenWidth(3),
+                    ),
+                  )
+                : controller.stuff.value.boss != null
+                    ? controller.stuff.value.boss!.name != null &&
+                            controller.stuff.value.boss!.image != null
+                        ? Container(
+                            width: screenWidth(1),
+                            height: screenWidth(2),
+                            child: Stack(
+                              fit: StackFit.loose,
+                              children: [
+                                Align(
+                                  alignment: Alignment.bottomCenter,
+                                  child: Container(
+                                    width: screenWidth(1),
+                                    height: screenWidth(3),
+                                    decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                            fit: BoxFit.fill,
+                                            image: AssetImage(
+                                                "assets/images/pngs/boss_background.png"))),
+                                  ),
+                                ),
+                                Align(
+                                    alignment: Alignment.topRight,
+                                    child: CustomImage(
+                                      url:
+                                          controller.stuff.value.boss!.image!,
+                                      fit: BoxFit.fill,
+                                      width: screenWidth(3),
+                                      height: screenWidth(1),
+                                    )),
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                      right: screenWidth(2.8),
+                                      top: screenWidth(7),
+                                      left: screenWidth(30)),
+                                  child: Center(
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        FittedBox(
+                                          child: CustomText(
+                                            text: "رئيس نادي الكرامة :",
+                                            styleType: TextStyleType.TITLE,
+                                            textColor: AppColors.whiteColor,
+                                          ),
+                                        ),
+                                        FittedBox(
+                                          child: CustomText(
+                                            text: controller
+                                                    .stuff.value.boss!.name ??
+                                                "",
+                                            styleType: TextStyleType.TITLE,
+                                            textColor: AppColors.whiteColor,
+                                          ),
+                                        )
+                                      ],
                                     ),
                                   ),
-                                  Align(
-                                      alignment: Alignment.topRight,
-                                      child: CustomImage(
-                                        url:
-                                            controller.stuff.value.boss!.image!,
-                                        fit: BoxFit.fill,
-                                        width: screenWidth(3),
-                                        height: screenWidth(1),
-                                      )),
-                                  Padding(
-                                    padding: EdgeInsets.only(
-                                        right: screenWidth(2.8),
-                                        top: screenWidth(7),
-                                        left: screenWidth(30)),
-                                    child: Center(
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          FittedBox(
-                                            child: CustomText(
-                                              text: "رئيس نادي الكرامة :",
-                                              styleType: TextStyleType.TITLE,
-                                              textColor: AppColors.whiteColor,
-                                            ),
-                                          ),
-                                          FittedBox(
-                                            child: CustomText(
-                                              text: controller
-                                                      .stuff.value.boss!.name ??
-                                                  "",
-                                              styleType: TextStyleType.TITLE,
-                                              textColor: AppColors.whiteColor,
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            )
-                          : SizedBox()
-                      : SizedBox()),
-              SizedBox(
-                height: screenWidth(20),
-              ),
-              Obx(() => controller.isLoading.value
-                  ? CustomShimmer(
-                      shimmerType: ShimmerType.CUSTOM,
-                      widget: Container(
-                        margin: EdgeInsets.only(left: screenWidth(8)),
-                        height: screenWidth(11),
-                        width: screenWidth(5),
-                        decoration: BoxDecoration(
-                            color: AppColors.whiteColor,
-                            borderRadius: BorderRadius.circular(30)),
-                      ),
-                    )
-                  : controller.stuff.value.wears != null
-                      ? CustomText(
-                          text: "ملابس فريق نادي الكرامة لعام " +
-                              controller.currentSeason.value,
-                          styleType: TextStyleType.CUSTOMTITLE,
-                        )
-                      : SizedBox()),
-              SizedBox(
-                height: screenWidth(20),
-              ),
-              Obx(() => controller.isLoading.value
-                  ? CustomShimmer(
-                      shimmerType: ShimmerType.CUSTOM,
-                      widget: Container(
-                        decoration: BoxDecoration(
-                            color: AppColors.backGroundColor,
-                            borderRadius: BorderRadius.circular(30)),
-                        width: screenWidth(1),
+                                )
+                              ],
+                            ),
+                          )
+                        : SizedBox()
+                    : SizedBox()),
+            SizedBox(
+              height: screenWidth(20),
+            ),
+            Obx(() => controller.isLoading.value
+                ? CustomShimmer(
+                    shimmerType: ShimmerType.CUSTOM,
+                    widget: Container(
+                      margin: EdgeInsets.only(left: screenWidth(8)),
+                      height: screenWidth(11),
+                      width: screenWidth(5),
+                      decoration: BoxDecoration(
+                          color: AppColors.whiteColor,
+                          borderRadius: BorderRadius.circular(30)),
+                    ),
+                  )
+                : controller.stuff.value.wears != null
+                    ? CustomText(
+                        text: "ملابس فريق نادي الكرامة لعام " +
+                            controller.currentSeason.value,
+                        styleType: TextStyleType.CUSTOMTITLE,
+                      )
+                    : SizedBox()),
+            SizedBox(
+              height: screenWidth(20),
+            ),
+            Obx(() => controller.isLoading.value
+                ? CustomShimmer(
+                    shimmerType: ShimmerType.CUSTOM,
+                    widget: Container(
+                      decoration: BoxDecoration(
+                          color: AppColors.backGroundColor,
+                          borderRadius: BorderRadius.circular(30)),
+                      width: screenWidth(1),
+                      height: screenWidth(2),
+                    ),
+                  )
+                : controller.stuff.value.wears == null
+                    ? SizedBox()
+                    : Container(
                         height: screenWidth(2),
-                      ),
-                    )
-                  : controller.stuff.value.wears == null
-                      ? SizedBox()
-                      : Container(
-                          height: screenWidth(2),
-                          width: screenWidth(1),
-                          decoration: BoxDecoration(
-                              color: AppColors.blueColorOne,
-                              borderRadius: BorderRadius.circular(30)),
-                          child: Center(
-                              child: CustomImage(
-                            url: controller.stuff.value.wears!.image!,
-                            width: screenWidth(1.4),
-                            height: screenWidth(1.4),
-                            fit: BoxFit.cover,
-                          )),
+                        width: screenWidth(1),
+                        decoration: BoxDecoration(
+                            color: AppColors.blueColorOne,
+                            borderRadius: BorderRadius.circular(30)),
+                        child: Center(
+                            child: CustomImage(
+                          url: controller.stuff.value.wears!.image!,
+                          width: screenWidth(1.4),
+                          height: screenWidth(1.4),
+                          fit: BoxFit.cover,
                         )),
-              SizedBox(
-                height: screenWidth(20),
-              ),
-              Obx(() => controller.isLoading.value
-                  ? CustomShimmer(
-                      shimmerType: ShimmerType.GROUP,
-                    )
-                  : controller.stuff.value.managers == null
-                      ? SizedBox()
-                      : CustomGroup(
-                          managers: controller.stuff.value.managers,
-                          title: "الاداريين",
-                          cartType: CartType.MANAGER,
-                        )),
-              SizedBox(
-                height: screenWidth(20),
-              ),
-              Obx(() => controller.isLoading.value
-                  ? CustomShimmer(
-                      shimmerType: ShimmerType.GROUP,
-                    )
-                  : controller.stuff.value.attack == null
-                      ? SizedBox()
-                      : CustomGroup(
-                          players: controller.stuff.value.attack,
-                          title: "المهاجمون",
-                          cartType: CartType.PLAYER,
-                        )),
-              SizedBox(
-                height: screenWidth(20),
-              ),
-              Obx(() => controller.isLoading.value
-                  ? CustomShimmer(
-                      shimmerType: ShimmerType.GROUP,
-                    )
-                  : controller.stuff.value.defence == null
-                      ? SizedBox()
-                      : CustomGroup(
-                          players: controller.stuff.value.defence,
-                          title: "المدافعون",
-                          cartType: CartType.PLAYER,
-                        )),
-              SizedBox(
-                height: screenWidth(20),
-              ),
-              Obx(() => controller.isLoading.value
-                  ? CustomShimmer(
-                      shimmerType: ShimmerType.GROUP,
-                    )
-                  : controller.stuff.value.middle == null
-                      ? SizedBox()
-                      : CustomGroup(
-                          players: controller.stuff.value.middle,
-                          title: "الوسط",
-                          cartType: CartType.PLAYER,
-                        )),
-              SizedBox(
-                height: screenWidth(20),
-              ),
-              Obx(() => controller.isLoading.value
-                  ? CustomShimmer(
-                      shimmerType: ShimmerType.GROUP,
-                    )
-                  : controller.stuff.value.goalKeepers == null
-                      ? SizedBox()
-                      : CustomGroup(
-                          players: controller.stuff.value.goalKeepers,
-                          title: "حراس المرمى",
-                          cartType: CartType.GOALKEAPR,
-                        )),
-              SizedBox(
-                height: screenWidth(10),
-              ),
-            ],
-          ),
+                      )),
+            SizedBox(
+              height: screenWidth(20),
+            ),
+            Obx(() => controller.isLoading.value
+                ? CustomShimmer(
+                    shimmerType: ShimmerType.GROUP,
+                  )
+                : controller.stuff.value.managers == null
+                    ? SizedBox()
+                    : CustomGroup(
+                        managers: controller.stuff.value.managers,
+                        title: "الاداريين",
+                        cartType: CartType.MANAGER,
+                      )),
+            SizedBox(
+              height: screenWidth(20),
+            ),
+            Obx(() => controller.isLoading.value
+                ? CustomShimmer(
+                    shimmerType: ShimmerType.GROUP,
+                  )
+                : controller.stuff.value.attack == null
+                    ? SizedBox()
+                    : CustomGroup(
+                        players: controller.stuff.value.attack,
+                        title: "المهاجمون",
+                        cartType: CartType.PLAYER,
+                      )),
+            SizedBox(
+              height: screenWidth(20),
+            ),
+            Obx(() => controller.isLoading.value
+                ? CustomShimmer(
+                    shimmerType: ShimmerType.GROUP,
+                  )
+                : controller.stuff.value.defence == null
+                    ? SizedBox()
+                    : CustomGroup(
+                        players: controller.stuff.value.defence,
+                        title: "المدافعون",
+                        cartType: CartType.PLAYER,
+                      )),
+            SizedBox(
+              height: screenWidth(20),
+            ),
+            Obx(() => controller.isLoading.value
+                ? CustomShimmer(
+                    shimmerType: ShimmerType.GROUP,
+                  )
+                : controller.stuff.value.middle == null
+                    ? SizedBox()
+                    : CustomGroup(
+                        players: controller.stuff.value.middle,
+                        title: "الوسط",
+                        cartType: CartType.PLAYER,
+                      )),
+            SizedBox(
+              height: screenWidth(20),
+            ),
+            Obx(() => controller.isLoading.value
+                ? CustomShimmer(
+                    shimmerType: ShimmerType.GROUP,
+                  )
+                : controller.stuff.value.goalKeepers == null
+                    ? SizedBox()
+                    : CustomGroup(
+                        players: controller.stuff.value.goalKeepers,
+                        title: "حراس المرمى",
+                        cartType: CartType.GOALKEAPR,
+                      )),
+            SizedBox(
+              height: screenWidth(10),
+            ),
+          ],
         ),
       ),
     ));

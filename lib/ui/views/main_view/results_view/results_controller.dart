@@ -26,7 +26,7 @@ class ResultsController extends GetxController {
     super.onInit();
   }
 
-  getData() async {
+  Future<void> getData() async {
     if (!isOnline) {
       CustomToast.showMeassge(message: tr("key_no_internet"));
       return;

@@ -1,3 +1,4 @@
+import 'package:al_karama_app/core/data/models/banner_model.dart';
 import 'package:al_karama_app/core/data/models/news_model.dart';
 import 'package:al_karama_app/core/data/models/next_match_model.dart';
 import 'package:al_karama_app/core/data/models/sports_model.dart';
@@ -12,8 +13,10 @@ import '../../../shared/custom_widgets/custom_toast.dart';
 
 class HomeController extends GetxController {
   RxBool isLoading = true.obs;
+  RxBool isRefresh = false.obs;
   bool haveWrong = false;
   RxInt selectedSport = 0.obs;
+  RxList<BannerModel> banners = <BannerModel>[].obs;
   RxList<SportsModel> sports = <SportsModel>[].obs;
   RxList<NewsModel> news = <NewsModel>[].obs;
   Rx<NextMatchModel> nextMatch = NextMatchModel().obs;
@@ -40,7 +43,7 @@ class HomeController extends GetxController {
     CustomToast.showMeassge(message: tr("key_refresh_please"));
   }
 
-  getData() async {
+  Future<void> getData() async {
     if (!isOnline) {
       CustomToast.showMeassge(message: tr("key_no_internet"));
       return;
@@ -49,17 +52,19 @@ class HomeController extends GetxController {
     isLoading.value = true;
     news.clear();
     sports.clear();
+    banners.clear();
     nextMatch.value = NextMatchModel();
     await SportsRepository().getSports().then(
       (value) {
         value.fold((l) => haveWrong = true, (r) => sports.value = r);
       },
     );
-    await NewsRepository()
-        .getAllNews()
-        .then((value) => value.fold((l) => l, (r) => news.addAll(r)));
-    await NextMatchRepository().getNextMatch().then(
-        (value) => value.fold((l) => print(l), (r) => nextMatch.value = r));
+    await NewsRepository().getAllNews().then(
+        (value) => value.fold((l) => haveWrong = true, (r) => news.addAll(r)));
+    await NextMatchRepository().getNextMatch().then((value) =>
+        value.fold((l) => haveWrong = true, (r) => nextMatch.value = r));
+    await NewsRepository().getBanners().then((value) =>
+        value.fold((l) => haveWrong = true, (r) => banners.value = r));
     if (haveWrong) {
       CustomToast.showMeassge(message: tr("key_some_thing_wrong"));
     }

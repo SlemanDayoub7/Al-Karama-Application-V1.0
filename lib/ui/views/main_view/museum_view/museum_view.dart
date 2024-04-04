@@ -1,9 +1,8 @@
+import 'package:al_karama_app/ui/shared/shared_widgets/custom_refresh.dart';
 import 'package:flutter/material.dart';
-import 'package:al_karama_app/core/data/repository/museum_repository.dart';
 import 'package:al_karama_app/core/enums/shimmer_type.dart';
 import 'package:al_karama_app/ui/shared/colors.dart';
 import 'package:al_karama_app/ui/shared/custom_widgets/custom_app_bar.dart';
-import 'package:al_karama_app/ui/shared/custom_widgets/custom_image.dart';
 import 'package:al_karama_app/ui/shared/custom_widgets/custom_text.dart';
 import 'package:al_karama_app/ui/shared/shared_widgets/custom_shimmer.dart';
 import 'package:al_karama_app/ui/shared/shared_widgets/custom_video.dart';
@@ -26,248 +25,227 @@ class MusemumView extends StatelessWidget {
               title: "المتحف",
               haveIconBack: false,
             ),
-            body: Padding(
-              padding: EdgeInsets.only(
-                  right: screenWidth(40),
-                  left: screenWidth(40),
-                  bottom: screenWidth(40)),
-              child: RefreshIndicator(
-                color: AppColors.blueColorOne,
-                onRefresh: () async {
-                  await controller.getData();
-                },
-                child: ListView(
-                  children: [
-                    SizedBox(
-                      height: screenWidth(20),
-                    ),
-                    Obx(
-                      () => controller.musemum.value.aboutClub == null ||
-                              controller.musemum.value.aboutClub!.length == 0
+            body: RefreshableList(
+              onRefresh: controller.getData,
+              widget: ListView(
+                shrinkWrap: true,
+                children: [
+                  SizedBox(
+                    height: screenWidth(20),
+                  ),
+                  Obx(
+                    () => controller.musemum.aboutClub == null ||
+                            controller.musemum.aboutClub!.length == 0
+                        ? SizedBox()
+                        : CustomText(
+                            text: "عن النادي",
+                            styleType: TextStyleType.CUSTOMTITLE,
+                          ),
+                  ),
+                  SizedBox(
+                    height: screenWidth(20),
+                  ),
+                  Obx(() => controller.isLoading.value
+                      ? CustomShimmer(
+                          shimmerType: ShimmerType.GROUP,
+                          height: screenWidth(2.2),
+                          width: screenWidth(1.7),
+                        )
+                      : controller.musemum.aboutClub == null ||
+                              controller.musemum.aboutClub!.length == 0
                           ? SizedBox()
-                          : CustomText(
-                              text: "عن النادي",
-                              styleType: TextStyleType.CUSTOMTITLE,
-                            ),
-                    ),
-                    SizedBox(
-                      height: screenWidth(20),
-                    ),
-                    Obx(() => controller.isLoading.value
-                        ? CustomShimmer(
-                            shimmerType: ShimmerType.GROUP,
-                            height: screenWidth(2.2),
-                            width: screenWidth(1.7),
-                          )
-                        : controller.musemum.value.aboutClub == null ||
-                                controller.musemum.value.aboutClub!.length == 0
-                            ? SizedBox()
-                            : Container(
-                                width: screenWidth(1),
-                                height: screenWidth(2),
-                                child: ListView.separated(
-                                  separatorBuilder: (context, index) {
-                                    return SizedBox(width: screenWidth(20));
-                                  },
+                          : Container(
+                              width: screenWidth(1),
+                              height: screenWidth(2),
+                              child: ListView.separated(
+                                separatorBuilder: (context, index) {
+                                  return SizedBox(width: screenWidth(20));
+                                },
+                                scrollDirection: Axis.horizontal,
+                                itemCount: controller.musemum.aboutClub!.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return CustomAboutClub(
+                                      text: controller.musemum.aboutClub![index]
+                                              .title ??
+                                          "",
+                                      imageUrl: controller.musemum
+                                              .aboutClub![index].image ??
+                                          "");
+                                },
+                              ))),
+                  SizedBox(
+                    height: screenWidth(20),
+                  ),
+                  Obx(() => controller.musemum.bosses == null ||
+                          controller.musemum.bosses!.length == 0
+                      ? SizedBox()
+                      : CustomText(
+                          text: "رؤساء النادي",
+                          styleType: TextStyleType.CUSTOMTITLE,
+                        )),
+                  SizedBox(height: screenWidth(30)),
+                  Obx(() => controller.isLoading.value
+                      ? CustomShimmer(
+                          shimmerType: ShimmerType.GROUP,
+                        )
+                      : controller.musemum.bosses == null ||
+                              controller.musemum.bosses!.length == 0
+                          ? SizedBox()
+                          : Container(
+                              width: screenWidth(1),
+                              height: screenWidth(1.8),
+                              child: ListView.separated(
                                   scrollDirection: Axis.horizontal,
-                                  itemCount: controller
-                                      .musemum.value.aboutClub!.length,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    return CustomAboutClub(
-                                        text: controller.musemum.value
-                                                .aboutClub![index].title ??
-                                            "",
-                                        imageUrl: controller.musemum.value
-                                                .aboutClub![index].image ??
-                                            "");
+                                  itemBuilder: (context, index) {
+                                    return CustomBoss(
+                                      imageUrl: controller
+                                              .musemum.bosses![index].image ??
+                                          "",
+                                      name: controller
+                                              .musemum.bosses![index].name ??
+                                          "",
+                                      date: controller.musemum.bosses![index]
+                                              .startYear ??
+                                          "",
+                                    );
                                   },
-                                ))),
-                    SizedBox(
-                      height: screenWidth(20),
-                    ),
-                    //  Obx(() => controller.isLoading.value
-                    //           ? CustomShimmer(
-                    //               shimmerType: ShimmerType.LIST,
-                    //               axis: Axis.horizontal,
-                    //             )
-                    //           :
-                    //            CustomImage(url:controller.musemum.value.strategies)),
-                    Obx(() => controller.musemum.value.bosses == null ||
-                            controller.musemum.value.bosses!.length == 0
-                        ? SizedBox()
-                        : CustomText(
-                            text: "رؤساء النادي",
-                            styleType: TextStyleType.CUSTOMTITLE,
-                          )),
-                    SizedBox(height: screenWidth(30)),
-                    Obx(() => controller.isLoading.value
-                        ? CustomShimmer(
-                            shimmerType: ShimmerType.GROUP,
-                          )
-                        : controller.musemum.value.bosses == null ||
-                                controller.musemum.value.bosses!.length == 0
-                            ? SizedBox()
-                            : Container(
-                                width: screenWidth(1),
-                                height: screenWidth(1.8),
-                                child: ListView.separated(
-                                    scrollDirection: Axis.horizontal,
-                                    itemBuilder: (context, index) {
-                                      return CustomBoss(
-                                        imageUrl: controller.musemum.value
-                                                .bosses![index].image ??
-                                            "",
-                                        name: controller.musemum.value
-                                                .bosses![index].name ??
-                                            "",
-                                        date: controller.musemum.value
-                                                .bosses![index].startYear ??
-                                            "",
-                                      );
-                                    },
-                                    separatorBuilder: (context, index) {
-                                      return SizedBox(
-                                        width: screenWidth(30),
-                                      );
-                                    },
-                                    itemCount: controller
-                                        .musemum.value.bosses!.length),
-                              )),
-                    SizedBox(
-                      height: screenWidth(20),
-                    ),
-                    Obx(() => controller.primesClub.length == 0
-                        ? SizedBox()
-                        : CustomText(
-                            text: "ألقاب نادي الكرامة",
-                            styleType: TextStyleType.CUSTOMTITLE,
-                          )),
-                    SizedBox(height: screenWidth(30)),
-                    Obx(() => controller.isLoading.value
-                        ? CustomShimmer(
-                            shimmerType: ShimmerType.GROUP,
-                          )
-                        : controller.primesClub.length == 0
-                            ? SizedBox()
-                            : Container(
-                                width: screenWidth(1),
-                                height: screenWidth(1.8),
-                                child: ListView.separated(
-                                    scrollDirection: Axis.horizontal,
-                                    itemBuilder: (context, index) {
-                                      return CustomCup(
-                                        cupName:
-                                            controller.primesClub[index].name ??
-                                                "",
-                                        date: controller
-                                                .primesClub[index].seasone ??
-                                            "",
-                                        imageUrl: controller
-                                                .primesClub[index].image ??
-                                            "",
-                                      );
-                                    },
-                                    separatorBuilder: (context, index) {
-                                      return SizedBox(
-                                        width: screenWidth(30),
-                                      );
-                                    },
-                                    itemCount: controller.primesClub.length),
-                              )),
-                    SizedBox(
-                      height: screenWidth(30),
-                    ),
-                    Obx(() => controller.musemum.value.primes == null ||
-                            controller.musemum.value.primes!.length == 0
-                        ? SizedBox()
-                        : CustomText(
-                            text: "الجوائز الفردية للاعبي  الكرامة",
-                            styleType: TextStyleType.CUSTOMTITLE,
-                          )),
-                    SizedBox(height: screenWidth(30)),
-                    Obx(() => controller.isLoading.value
-                        ? CustomShimmer(
-                            shimmerType: ShimmerType.GROUP,
-                          )
-                        : controller.primesPlayers.length == 0
-                            ? SizedBox()
-                            : Container(
-                                width: screenWidth(1),
-                                height: screenWidth(1.8),
-                                child: ListView.separated(
-                                    scrollDirection: Axis.horizontal,
-                                    itemBuilder: (context, index) {
-                                      return CustomBoss(
-                                        imageUrl: controller
-                                                .primesPlayers[index].image ??
-                                            "",
-                                        name: controller
-                                                .primesPlayers[index].name ??
-                                            " ",
-                                        date: controller.primesPlayers[index]
-                                                .description ??
-                                            " ",
-                                      );
-                                    },
-                                    separatorBuilder: (context, index) {
-                                      return SizedBox(
-                                        width: screenWidth(30),
-                                      );
-                                    },
-                                    itemCount: controller.primesPlayers.length),
-                              )),
-                    SizedBox(height: screenWidth(30)),
-                    Obx(() => controller.musemum.value.bestGoals == null ||
-                            controller.musemum.value.bestGoals!.length == 0
-                        ? SizedBox()
-                        : CustomText(
-                            text: "أجمل أهداف لاعبي الكرامة",
-                            styleType: TextStyleType.CUSTOMTITLE,
-                          )),
-                    SizedBox(height: screenWidth(30)),
-                    Obx(() => controller.isLoading.value
-                        ? CustomShimmer(
-                            shimmerType: ShimmerType.GROUP,
-                            width: screenWidth(1.2),
-                            height: screenWidth(3),
-                          )
-                        : controller.musemum.value.bestGoals == null ||
-                                controller.musemum.value.bestGoals!.length == 0
-                            ? SizedBox()
-                            : Container(
-                                width: screenWidth(1),
-                                height: screenWidth(3.5),
-                                child: ListView.separated(
-                                    scrollDirection: Axis.horizontal,
-                                    itemBuilder: (context, index) {
-                                      return CustomVideo(
-                                        color: AppColors.blueColorOne,
-                                        title: controller
-                                                .musemum
-                                                .value
-                                                .bestGoals![index]
-                                                .description ??
-                                            "",
-                                        videoUrl: controller.musemum.value
-                                                .bestGoals![index].url ??
-                                            "",
-                                        imageUrl: controller.imagesUrl[index],
-                                      );
-                                    },
-                                    separatorBuilder: (context, index) {
-                                      return SizedBox(
-                                        width: screenWidth(30),
-                                      );
-                                    },
-                                    itemCount: controller
-                                        .musemum.value.bestGoals!.length),
-                              )),
-                    SizedBox(
-                      height: screenWidth(4),
-                    ),
-                  ],
-                ),
+                                  separatorBuilder: (context, index) {
+                                    return SizedBox(
+                                      width: screenWidth(30),
+                                    );
+                                  },
+                                  itemCount: controller.musemum.bosses!.length),
+                            )),
+                  SizedBox(
+                    height: screenWidth(20),
+                  ),
+                  Obx(() => controller.primesClub.length == 0
+                      ? SizedBox()
+                      : CustomText(
+                          text: "ألقاب نادي الكرامة",
+                          styleType: TextStyleType.CUSTOMTITLE,
+                        )),
+                  SizedBox(height: screenWidth(30)),
+                  Obx(() => controller.isLoading.value
+                      ? CustomShimmer(
+                          shimmerType: ShimmerType.GROUP,
+                        )
+                      : controller.primesClub.length == 0
+                          ? SizedBox()
+                          : Container(
+                              width: screenWidth(1),
+                              height: screenWidth(1.8),
+                              child: ListView.separated(
+                                  scrollDirection: Axis.horizontal,
+                                  itemBuilder: (context, index) {
+                                    return CustomCup(
+                                      cupName:
+                                          controller.primesClub[index].name ??
+                                              "",
+                                      date: controller
+                                              .primesClub[index].seasone ??
+                                          "",
+                                      imageUrl:
+                                          controller.primesClub[index].image ??
+                                              "",
+                                    );
+                                  },
+                                  separatorBuilder: (context, index) {
+                                    return SizedBox(
+                                      width: screenWidth(30),
+                                    );
+                                  },
+                                  itemCount: controller.primesClub.length),
+                            )),
+                  SizedBox(
+                    height: screenWidth(30),
+                  ),
+                  Obx(() => controller.musemum.primes == null ||
+                          controller.musemum.primes!.length == 0
+                      ? SizedBox()
+                      : CustomText(
+                          text: "الجوائز الفردية للاعبي  الكرامة",
+                          styleType: TextStyleType.CUSTOMTITLE,
+                        )),
+                  SizedBox(height: screenWidth(30)),
+                  Obx(() => controller.isLoading.value
+                      ? CustomShimmer(
+                          shimmerType: ShimmerType.GROUP,
+                        )
+                      : controller.primesPlayers.length == 0
+                          ? SizedBox()
+                          : Container(
+                              width: screenWidth(1),
+                              height: screenWidth(1.8),
+                              child: ListView.separated(
+                                  scrollDirection: Axis.horizontal,
+                                  itemBuilder: (context, index) {
+                                    return CustomBoss(
+                                      imageUrl: controller
+                                              .primesPlayers[index].image ??
+                                          "",
+                                      name: controller
+                                              .primesPlayers[index].name ??
+                                          " ",
+                                      date: controller.primesPlayers[index]
+                                              .description ??
+                                          " ",
+                                    );
+                                  },
+                                  separatorBuilder: (context, index) {
+                                    return SizedBox(
+                                      width: screenWidth(30),
+                                    );
+                                  },
+                                  itemCount: controller.primesPlayers.length),
+                            )),
+                  SizedBox(height: screenWidth(30)),
+                  Obx(() => controller.musemum.bestGoals == null ||
+                          controller.musemum.bestGoals!.length == 0
+                      ? SizedBox()
+                      : CustomText(
+                          text: "أجمل أهداف لاعبي الكرامة",
+                          styleType: TextStyleType.CUSTOMTITLE,
+                        )),
+                  SizedBox(height: screenWidth(30)),
+                  Obx(() => controller.isLoading.value
+                      ? CustomShimmer(
+                          shimmerType: ShimmerType.GROUP,
+                          width: screenWidth(1.2),
+                          height: screenWidth(3),
+                        )
+                      : controller.musemum.bestGoals == null ||
+                              controller.musemum.bestGoals!.length == 0
+                          ? SizedBox()
+                          : Container(
+                              width: screenWidth(1),
+                              height: screenWidth(3.5),
+                              child: ListView.separated(
+                                  scrollDirection: Axis.horizontal,
+                                  itemBuilder: (context, index) {
+                                    return CustomVideo(
+                                      color: AppColors.blueColorOne,
+                                      title: controller.musemum
+                                              .bestGoals![index].description ??
+                                          "",
+                                      videoUrl: controller
+                                              .musemum.bestGoals![index].url ??
+                                          "",
+                                      imageUrl: controller.imagesUrl[index],
+                                    );
+                                  },
+                                  separatorBuilder: (context, index) {
+                                    return SizedBox(
+                                      width: screenWidth(30),
+                                    );
+                                  },
+                                  itemCount:
+                                      controller.musemum.bestGoals!.length),
+                            )),
+                  SizedBox(
+                    height: screenWidth(2),
+                  ),
+                ],
               ),
             )));
   }

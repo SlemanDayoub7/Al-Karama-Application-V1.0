@@ -1,3 +1,4 @@
+import 'package:al_karama_app/ui/shared/shared_widgets/custom_refresh.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:al_karama_app/core/enums/shimmer_type.dart';
@@ -9,8 +10,7 @@ import 'package:al_karama_app/ui/shared/utils.dart';
 import 'package:al_karama_app/ui/views/main_view/results_view/results_controller.dart';
 import 'package:al_karama_app/ui/views/main_view/results_view/results_view_widgets/custom_round.dart';
 import 'package:al_karama_app/ui/views/main_view/results_view/results_view_widgets/ranking_table.dart';
-
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 
 class ResultsView extends StatelessWidget {
@@ -25,12 +25,10 @@ class ResultsView extends StatelessWidget {
         title: "النتائج",
         haveIconBack: false,
       ),
-      body: RefreshIndicator(
-        color: AppColors.blueColorOne,
-        onRefresh: () async {
-          await controller.getData();
-        },
-        child: ListView(
+      body: RefreshableList(
+        onRefresh: controller.getData,
+        widget: ListView(
+          shrinkWrap: true,
           children: [
             SizedBox(height: screenWidth(20)),
             Obx(() => controller.isLoading.value
@@ -40,8 +38,6 @@ class ResultsView extends StatelessWidget {
                       decoration: BoxDecoration(
                           color: AppColors.blackColor,
                           borderRadius: BorderRadius.circular(25)),
-                      margin: EdgeInsets.only(
-                          left: screenWidth(25), right: screenWidth(25)),
                       height: screenWidth(1.5),
                       width: screenWidth(1),
                     ),
@@ -55,31 +51,26 @@ class ResultsView extends StatelessWidget {
                             width: screenWidth(1),
                             child: Stack(
                               children: [
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                      left: screenWidth(20),
-                                      right: screenWidth(20)),
-                                  child: CarouselSlider(
-                                    carouselController:
-                                        controller.carouselController,
-                                    options: CarouselOptions(
-                                        onPageChanged: (index, reason) {},
-                                        scrollPhysics: BouncingScrollPhysics(),
-                                        autoPlay: true,
-                                        aspectRatio: 2,
-                                        height: screenWidth(1.5),
-                                        viewportFraction: 1),
-                                    items: [
-                                      ...List.generate(
-                                          controller.matches.value.football!
-                                              .length, (index) {
-                                        return CustomRound(
-                                          football: controller
-                                              .matches.value.football![index],
-                                        );
-                                      })
-                                    ],
-                                  ),
+                                CarouselSlider(
+                                  carouselController:
+                                      controller.carouselController,
+                                  options: CarouselOptions(
+                                      onPageChanged: (index, reason) {},
+                                      scrollPhysics: BouncingScrollPhysics(),
+                                      autoPlay: true,
+                                      aspectRatio: 2,
+                                      height: screenWidth(1.5),
+                                      viewportFraction: 1),
+                                  items: [
+                                    ...List.generate(
+                                        controller.matches.value.football!
+                                            .length, (index) {
+                                      return CustomRound(
+                                        football: controller
+                                            .matches.value.football![index],
+                                      );
+                                    })
+                                  ],
                                 ),
                               ],
                             ),
@@ -87,17 +78,13 @@ class ResultsView extends StatelessWidget {
             SizedBox(height: screenWidth(20)),
             Obx(
               () => controller.isLoading.value
-                  ? Padding(
-                      padding: EdgeInsets.only(
-                          left: screenWidth(30), right: screenWidth(30)),
-                      child: CustomShimmer(
-                        shimmerType: ShimmerType.CUSTOM,
-                        widget: Image.asset(
-                          "assets/images/pngs/shimmer_table.png",
-                          width: screenWidth(1),
-                          height: screenWidth(1),
-                          fit: BoxFit.fill,
-                        ),
+                  ? CustomShimmer(
+                      shimmerType: ShimmerType.CUSTOM,
+                      widget: Image.asset(
+                        "assets/images/pngs/shimmer_table.png",
+                        width: screenWidth(1),
+                        height: screenWidth(1),
+                        fit: BoxFit.fill,
                       ),
                     )
                   : controller.standing.value.football == null
@@ -109,8 +96,8 @@ class ResultsView extends StatelessWidget {
                             ),
             ),
             SizedBox(
-              height: screenWidth(4),
-            ),
+              height: screenWidth(2),
+            )
           ],
         ),
       ),

@@ -17,7 +17,7 @@ class FansView extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-            appBar: CustomAppBar(title: "رابطة المشجين"),
+            appBar: CustomAppBar(title: "رابطة المشجعين"),
             body: Padding(
               padding: EdgeInsets.only(
                   left: screenWidth(40), right: screenWidth(40)),
@@ -263,8 +263,8 @@ class FansView extends StatelessWidget {
                     SizedBox(height: screenWidth(20)),
                     Obx(() => controller.isLoading.value
                         ? CustomShimmer(
-                            height: screenWidth(2),
-                            width: screenWidth(2),
+                            width: screenWidth(3),
+                            height: screenWidth(3),
                             shimmerType: ShimmerType.GROUP,
                           )
                         : controller.fans.length == 0

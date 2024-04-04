@@ -63,6 +63,7 @@ String getImageOfVideo(String value) {
   return imageUrl;
 }
 
+RxBool isRefresh = false.obs;
 SharedPrefrenceRepository get storage => Get.find<SharedPrefrenceRepository>();
 ConnectivitySerivce get connectivitySerivce => Get.find<ConnectivitySerivce>();
 bool isOnline = true;

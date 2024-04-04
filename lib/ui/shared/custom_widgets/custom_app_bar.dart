@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:al_karama_app/ui/shared/colors.dart';
 import 'package:al_karama_app/ui/shared/custom_widgets/custom_text.dart';
 import 'package:al_karama_app/ui/shared/utils.dart';
-import 'package:flutter/widgets.dart';
 
 import 'package:get/get.dart';
 
@@ -19,147 +18,128 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   CustomAppBar(
       {required this.title, this.haveIconBack = true, this.backGroundColor});
   @override
-  Size get preferredSize => Size.fromHeight(screenWidth(5.5));
+  Size get preferredSize => Size.fromHeight(screenWidth(5.7));
   @override
   Widget build(BuildContext context) {
     return AppBar(
-        backgroundColor: backGroundColor ?? Colors.transparent,
-        automaticallyImplyLeading: false,
-        flexibleSpace: FlexibleSpaceBar(
-          background: Container(
-            padding: EdgeInsets.all(screenWidth(26)),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(25),
-                    bottomRight: Radius.circular(25)),
-                color: AppColors.blueColorOne),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                haveIconBack!
-                    ? IconButton(
-                        padding: EdgeInsets.all(0),
-                        onPressed: () {
-                          Get.back();
-                        },
-                        icon: Icon(
-                          size: screenWidth(14),
-                          Icons.arrow_back_ios,
-                          color: AppColors.whiteColor,
-                        ))
-                    : SizedBox(
-                        width: screenWidth(10),
-                      ),
-                Expanded(
-                  child: CustomText(
-                    textAlign: TextAlign.center,
-                    text: title,
-                    textColor: AppColors.whiteColor,
-                    styleType: TextStyleType.TITLE,
+      shape: ContinuousRectangleBorder(
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(40),
+          bottomRight: Radius.circular(40),
+        ),
+      ),
+      backgroundColor: AppColors.blueColorOne,
+      automaticallyImplyLeading: false,
+      leading: haveIconBack!
+          ? IconButton(
+              padding: EdgeInsets.all(0),
+              onPressed: () {
+                Get.back();
+              },
+              icon: Icon(
+                size: screenWidth(14),
+                Icons.arrow_back_ios,
+                color: AppColors.whiteColor,
+              ))
+          : SizedBox(),
+      actions: [
+        Obx(() => Container(
+              margin: EdgeInsetsDirectional.only(end: screenWidth(30)),
+              decoration: BoxDecoration(
+                  border: Border.all(
+                    color: AppColors.orangeColor,
+                    width: screenWidth(screenWidth(1)),
                   ),
-                ),
-                Obx(() => Container(
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                            color: AppColors.orangeColor,
-                            width: screenWidth(screenWidth(1)),
-                          ),
-                          color: AppColors.whiteColor,
-                          borderRadius: BorderRadius.circular(10)),
-                      padding: EdgeInsets.all(screenWidth(70)),
-                      width: screenWidth(6.3),
-                      height: screenWidth(8),
-                      child: Center(
-                        child: controller.sports.length == 0
-                            ? SizedBox()
-                            : PopupMenuButton(
-                                position: PopupMenuPosition.under,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20)),
-                                padding: EdgeInsets.zero,
-                                color: AppColors.whiteColor,
-                                onSelected: (value) {
-                                  print("ss");
+                  color: AppColors.whiteColor,
+                  borderRadius: BorderRadius.circular(10)),
+              padding: EdgeInsets.all(screenWidth(70)),
+              width: screenWidth(6.3),
+              height: screenWidth(8),
+              child: Center(
+                child: controller.sports.length == 0
+                    ? SizedBox()
+                    : PopupMenuButton(
+                        position: PopupMenuPosition.under,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20)),
+                        padding: EdgeInsets.zero,
+                        color: AppColors.whiteColor,
+                        onSelected: (value) {
+                          print("ss");
+                        },
+                        child: Container(
+                            width: screenWidth(11),
+                            height: screenWidth(11),
+                            child: CustomImage(
+                              url: controller
+                                      .sports[controller.selectedSport.value]
+                                      .image ??
+                                  "",
+                              height: screenWidth(11),
+                              width: screenWidth(11),
+                              fit: BoxFit.fill,
+                            )),
+                        itemBuilder: (context) {
+                          return [
+                            ...List.generate(
+                              controller.sports.length,
+                              (index) => PopupMenuItem(
+                                onTap: () {
+                                  controller.selectSport(
+                                      controller.sports[index].uuid ?? "");
                                 },
                                 child: Container(
-                                    width: screenWidth(11),
-                                    height: screenWidth(11),
-                                    child: CustomImage(
-                                      url: controller
-                                              .sports[controller
-                                                  .selectedSport.value]
-                                              .image ??
-                                          "",
-                                      height: screenWidth(11),
-                                      width: screenWidth(11),
-                                      fit: BoxFit.fill,
-                                    )),
-                                itemBuilder: (context) {
-                                  return [
-                                    ...List.generate(
-                                      controller.sports.length,
-                                      (index) => PopupMenuItem(
-                                        onTap: () {
-                                          controller.selectSport(
-                                              controller.sports[index].uuid ??
-                                                  "");
-                                        },
-                                        child: Container(
-                                          margin: EdgeInsets.only(
-                                              bottom: screenWidth(60)),
-                                          width: double.infinity,
-                                          padding:
-                                              EdgeInsets.all(screenWidth(40)),
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
-                                              color: AppColors.blueColorOne,
-                                              border: Border.all(
-                                                  width: screenWidth(
-                                                      screenWidth(1)),
-                                                  color:
-                                                      AppColors.orangeColor)),
-                                          child: Row(
-                                            children: [
-                                              Container(
-                                                  width: screenWidth(11),
-                                                  height: screenWidth(11),
-                                                  child: CustomImage(
-                                                    url: controller
-                                                            .sports[index]
-                                                            .image ??
-                                                        "",
-                                                    height: screenWidth(10),
-                                                    width: screenWidth(10),
-                                                    fit: BoxFit.fill,
-                                                  )),
-                                              SizedBox(
-                                                width: screenWidth(30),
-                                              ),
-                                              Expanded(
-                                                child: CustomText(
-                                                  styleType:
-                                                      TextStyleType.SMALL,
-                                                  text: controller
-                                                          .sports[index].name ??
-                                                      "",
-                                                  textColor:
-                                                      AppColors.whiteColor,
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        ),
+                                  margin:
+                                      EdgeInsets.only(bottom: screenWidth(60)),
+                                  width: double.infinity,
+                                  padding: EdgeInsets.all(screenWidth(40)),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                      color: AppColors.blueColorOne,
+                                      border: Border.all(
+                                          width: screenWidth(screenWidth(1)),
+                                          color: AppColors.orangeColor)),
+                                  child: Row(
+                                    children: [
+                                      Container(
+                                          width: screenWidth(11),
+                                          height: screenWidth(11),
+                                          child: CustomImage(
+                                            url: controller
+                                                    .sports[index].image ??
+                                                "",
+                                            height: screenWidth(10),
+                                            width: screenWidth(10),
+                                            fit: BoxFit.fill,
+                                          )),
+                                      SizedBox(
+                                        width: screenWidth(30),
                                       ),
-                                    )
-                                  ];
-                                },
+                                      Expanded(
+                                        child: CustomText(
+                                          styleType: TextStyleType.SMALL,
+                                          text: controller.sports[index].name ??
+                                              "",
+                                          textColor: AppColors.whiteColor,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
                               ),
+                            )
+                          ];
+                        },
                       ),
-                    )),
-              ],
-            ),
-          ),
-        ));
+              ),
+            )),
+      ],
+      title: CustomText(
+        text: title,
+        styleType: TextStyleType.TITLE,
+        textColor: AppColors.whiteColor,
+      ),
+      centerTitle: true,
+    );
   }
 }

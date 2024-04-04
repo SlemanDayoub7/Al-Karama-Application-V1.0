@@ -65,6 +65,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.1"
+  card_swiper:
+    dependency: "direct main"
+    description:
+      name: card_swiper
+      sha256: "21e52a144decbf0054e7cfed8bbe46fc89635e6c86b767eaccfe7d5aeba32528"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.1"
   carousel_slider:
     dependency: "direct main"
     description:
@@ -273,6 +281,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.0"
+  flexible_grid_view:
+    dependency: "direct main"
+    description:
+      name: flexible_grid_view
+      sha256: c837b55628e5177c8ceedd5b9eef04c5a360b2b855e07742657f5bbbe0f45167
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.2"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -315,6 +331,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.2.0"
+  flutter_staggered_animations:
+    dependency: "direct main"
+    description:
+      name: flutter_staggered_animations
+      sha256: "81d3c816c9bb0dca9e8a5d5454610e21ffb068aedb2bde49d2f8d04f75538351"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.1"
   flutter_svg:
     dependency: "direct main"
     description:
@@ -661,6 +685,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.1.1"
+  pull_to_refresh_flutter3:
+    dependency: "direct main"
+    description:
+      name: pull_to_refresh_flutter3
+      sha256: "37a88d901cca9a46dbdd46523de8e7b35a3e58634a0e775b1a5904981f69b353"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.2"
   rxdart:
     dependency: transitive
     description:

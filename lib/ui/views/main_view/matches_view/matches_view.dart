@@ -1,3 +1,4 @@
+import 'package:al_karama_app/ui/shared/shared_widgets/custom_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:al_karama_app/core/enums/shimmer_type.dart';
 
@@ -14,7 +15,7 @@ import 'package:get/get.dart';
 
 class MatchesView extends StatelessWidget {
   MatchesView({super.key});
-  MatcheController controller = Get.put(MatcheController());
+  MatchesController controller = Get.put(MatchesController());
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -24,17 +25,15 @@ class MatchesView extends StatelessWidget {
           title: "المباريات",
           haveIconBack: false,
         ),
-        body: RefreshIndicator(
-          color: AppColors.blueColorOne,
-          onRefresh: () async {
-            await controller.getData();
-          },
-          child: ListView(
+        body: RefreshableList(
+          havePadding: false,
+          onRefresh: controller.getData,
+          widget: ListView(
             children: [
               SizedBox(
                 height: screenWidth(30),
               ),
-              Obx(() => controller.isLoading.value
+              Obx(() => controller.isLoading
                   ? CustomShimmer(
                       shimmerType: ShimmerType.CUSTOM,
                       widget: Container(
@@ -47,9 +46,9 @@ class MatchesView extends StatelessWidget {
                         width: screenWidth(1),
                       ),
                     )
-                  : controller.finishedMatch.value.football == null
+                  : controller.finishedMatches.football == null
                       ? SizedBox()
-                      : controller.matches.value.football!.length == 0
+                      : controller.matches.football!.length == 0
                           ? SizedBox()
                           : Container(
                               width: screenWidth(1),
@@ -63,9 +62,11 @@ class MatchesView extends StatelessWidget {
                                           right: screenWidth(30)),
                                       child: CustomMatch(
                                         isCurrentMatch: true,
-                                        match: controller.finishedMatch.value
-                                            .football![controller.finishedMatch
-                                                .value.football!.length -
+                                        match: controller.finishedMatches
+                                            .football![controller
+                                                .finishedMatches
+                                                .football!
+                                                .length -
                                             1],
                                       ),
                                     ),
@@ -75,10 +76,11 @@ class MatchesView extends StatelessWidget {
                                     child: InkWell(
                                       onTap: () {
                                         controller.goToMatchDetail(controller
-                                            .finishedMatch
-                                            .value
-                                            .football![controller.finishedMatch
-                                                .value.football!.length -
+                                            .finishedMatches
+                                            .football![controller
+                                                .finishedMatches
+                                                .football!
+                                                .length -
                                             1]);
                                       },
                                       child: Container(
@@ -106,7 +108,7 @@ class MatchesView extends StatelessWidget {
               SizedBox(
                 height: screenWidth(15),
               ),
-              Obx(() => controller.isLoading.value
+              Obx(() => controller.isLoading
                   ? CustomShimmer(
                       shimmerType: ShimmerType.CUSTOM,
                       widget: Container(
@@ -119,9 +121,9 @@ class MatchesView extends StatelessWidget {
                         height: screenWidth(20),
                       ),
                     )
-                  : controller.matches.value.football == null
+                  : controller.matches.football == null
                       ? SizedBox()
-                      : controller.matches.value.football!.length == 0
+                      : controller.matches.football!.length == 0
                           ? SizedBox()
                           : Row(
                               children: [
@@ -153,28 +155,28 @@ class MatchesView extends StatelessWidget {
               ),
               Obx(() => Padding(
                   padding: EdgeInsets.all(screenWidth(30)),
-                  child: controller.isLoading.value
+                  child: controller.isLoading
                       ? CustomShimmer(shimmerType: ShimmerType.LIST)
-                      : controller.matches.value.football == null
+                      : controller.matches.football == null
                           ? SizedBox()
-                          : controller.matches.value.football!.length == 0
+                          : controller.matches.football!.length == 0
                               ? SizedBox()
                               : ListView.builder(
                                   physics: NeverScrollableScrollPhysics(),
                                   shrinkWrap: true,
                                   itemCount:
-                                      controller.matches.value.football!.length,
+                                      controller.matches.football!.length,
                                   itemBuilder:
                                       (BuildContext context, int index) {
                                     return CustomMatch(
                                       isCurrentMatch: false,
-                                      match: controller
-                                          .matches.value.football![index],
+                                      match:
+                                          controller.matches.football![index],
                                     );
                                   },
                                 ))),
               SizedBox(
-                height: screenWidth(4),
+                height: screenWidth(2),
               ),
             ],
           ),
